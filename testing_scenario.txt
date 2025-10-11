@@ -1,0 +1,55 @@
+Scénario de Test pour l'Application de Scraping
+
+Ce document décrit le processus étape par étape pour tester tous les points de terminaison de l'application de scraping. Assurez-vous que l'application fonctionne sur http://localhost:8080.
+
+Prérequis :
+- Démarrer l'application Spring Boot.
+- Utiliser un outil comme Postman ou curl pour envoyer des requêtes.
+- Remplacer {{token}}, {{userPublicId}}, {{typeAbonnementPublicId}}, {{scrapingId}} par des valeurs réelles provenant des réponses.
+
+Étape 1 : Créer des Types d'Abonnement
+- Créer un type d'abonnement mensuel.
+- Créer un type d'abonnement trimestriel.
+- Vérifier en obtenant tous les types.
+
+Étape 2 : Inscription et Connexion Utilisateur
+- Inscrire un nouvel utilisateur (RECRUTEUR ou ENTREPRISE).
+- Se connecter pour obtenir le jeton JWT.
+- Utiliser le jeton dans l'en-tête Authorization pour les requêtes suivantes.
+
+Étape 3 : Créer un Abonnement
+- Créer un abonnement pour l'utilisateur avec un type.
+- Vérifier que l'abonnement est créé et actif.
+
+Étape 4 : Effectuer un Paiement
+- Créer un paiement pour l'abonnement.
+- Cela devrait activer l'abonnement.
+
+Étape 5 : Effectuer le Scraping
+- Effectuer une requête de scraping (s'assurer que le quota est disponible).
+- Cela créera des profils fictifs.
+
+Étape 6 : Récupérer les Données
+- Obtenir tous les abonnements.
+- Obtenir tous les scrapings pour l'utilisateur.
+- Obtenir les profils pour un scraping spécifique.
+
+Étape 7 : Tests de Logique Métier
+- Essayer de scraper sans abonnement actif (devrait échouer).
+- Essayer de scraper en dépassant le quota (devrait échouer).
+- Vérifier le quota restant.
+
+Résumé des Points de Terminaison :
+- POST /api/type-abonnements : Créer un type d'abonnement
+- GET /api/type-abonnements : Obtenir tous les types
+- POST /api/v1/register : Inscrire un utilisateur
+- POST /api/v1/login : Connecter un utilisateur
+- POST /api/abonnements : Créer un abonnement
+- GET /api/abonnements : Obtenir les abonnements
+- POST /api/paiements : Créer un paiement
+- GET /api/paiements : Obtenir les paiements
+- POST /api/scrapings/perform : Effectuer le scraping
+- GET /api/scrapings : Obtenir les scrapings
+- GET /api/profil-scrapers/scraping/{scrapingId} : Obtenir les profils par scraping
+
+Utilisez le fichier test_data.json pour des exemples de requêtes.

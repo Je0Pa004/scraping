@@ -1,0 +1,257 @@
+{
+  "info": {
+    "name": "Scraping Application API Tests",
+    "description": "Collection for testing the scraping application endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create TypeAbonnement - MENSUEL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"Abonnement Mensuel\",\n  \"cout\": 50.0,\n  \"nombreScrapingMax\": 100,\n  \"type\": \"MENSUEL\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/type-abonnements",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "type-abonnements"]
+        }
+      }
+    },
+    {
+      "name": "Create TypeAbonnement - TRIMESTRIEL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"Abonnement Trimestriel\",\n  \"cout\": 120.0,\n  \"nombreScrapingMax\": 300,\n  \"type\": \"TRIMESTRIEL\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/type-abonnements",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "type-abonnements"]
+        }
+      }
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nom\": \"John Recruiter\",\n  \"email\": \"john.recruiter@example.com\",\n  \"motDePasse\": \"password123\",\n  \"typeCompte\": \"RECRUTEUR\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "register"]
+        }
+      }
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.recruiter@example.com\",\n  \"motDePasse\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "login"]
+        }
+      }
+    },
+    {
+      "name": "Create Abonnement",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"typeAbonnementPublicId\": \"{{typeAbonnementPublicId}}\",\n  \"utilisateurPublicId\": \"{{userPublicId}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/abonnements",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "abonnements"]
+        }
+      }
+    },
+    {
+      "name": "Create Paiement",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"montant\": 50.0,\n  \"methode\": \"CARTE_CREDIT\",\n  \"utilisateurPublicId\": \"{{userPublicId}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/paiements",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "paiements"]
+        }
+      }
+    },
+    {
+      "name": "Perform Scraping",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source\": \"LINKEDIN\",\n  \"titre\": \"Test Scraping\",\n  \"secteur\": \"Tech\",\n  \"localisation\": \"Paris\",\n  \"entreprise\": \"TechCorp\",\n  \"emploi\": \"Developer\",\n  \"tailleEntreprise\": \"50-200\",\n  \"utilisateurPublicId\": \"{{userPublicId}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/scrapings/perform",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "scrapings", "perform"]
+        }
+      }
+    },
+    {
+      "name": "Get All Abonnements",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/abonnements",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "abonnements"]
+        }
+      }
+    },
+    {
+      "name": "Get All Scrapings",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/scrapings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "scrapings"]
+        }
+      }
+    },
+    {
+      "name": "Get Profiles by Scraping",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/profil-scrapers/scraping/{{scrapingId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "profil-scrapers", "scraping", "{{scrapingId}}"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "userPublicId",
+      "value": ""
+    },
+    {
+      "key": "typeAbonnementPublicId",
+      "value": ""
+    },
+    {
+      "key": "scrapingId",
+      "value": ""
+    }
+  ]
+}
