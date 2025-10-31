@@ -1,0 +1,198 @@
+<div class="p-6 max-w-6xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-black text-gray-900 mb-2">💳 Paiement</h1>
+    <p class="text-gray-600">Finalisez votre abonnement en toute sécurité</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+    <!-- Formulaire de paiement -->
+    <div class="lg:col-span-2">
+      <!-- Abonnement sélectionné -->
+      <div class="bg-gradient-to-br from-primary-50 to-purple-50 rounded-2xl shadow-soft p-6 mb-6" *ngIf="selectedSubscription">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Abonnement sélectionné</h2>
+        <div class="bg-white rounded-xl p-4">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ selectedSubscription.nom }}</h3>
+          <p class="text-gray-600 mb-3">{{ selectedSubscription.description }}</p>
+          <div class="flex items-center gap-4 text-sm text-gray-700">
+            <span><i class="fa-solid fa-search mr-1"></i>{{ selectedSubscription.nombreScrapingMax }} recherches</span>
+            <span><i class="fa-solid fa-calendar mr-1"></i>{{ selectedSubscription.duree }} jours</span>
+            <span><i class="fa-solid fa-tag mr-1"></i>{{ selectedSubscription.type }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Méthode de paiement -->
+      <div class="bg-white rounded-2xl shadow-soft p-6 mb-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">Méthode de paiement</h2>
+        
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <label class="relative cursor-pointer">
+            <input type="radio" name="payment-method" [(ngModel)]="paymentMethod" value="card" class="peer sr-only" />
+            <div class="p-4 border-2 border-gray-300 rounded-xl peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all duration-200 text-center">
+              <i class="fa-solid fa-credit-card text-2xl text-gray-600 peer-checked:text-primary-600 mb-2"></i>
+              <div class="text-sm font-semibold text-gray-900">Carte bancaire</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input type="radio" name="payment-method" [(ngModel)]="paymentMethod" value="moov" class="peer sr-only" />
+            <div class="p-4 border-2 border-gray-300 rounded-xl peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all duration-200 text-center">
+              <div class="text-2xl font-bold text-orange-600 mb-2">Moov</div>
+              <div class="text-sm font-semibold text-gray-900">Mobile Money</div>
+            </div>
+          </label>
+          
+          <label class="relative cursor-pointer">
+            <input type="radio" name="payment-method" [(ngModel)]="paymentMethod" value="flooz" class="peer sr-only" />
+            <div class="p-4 border-2 border-gray-300 rounded-xl peer-checked:border-primary-600 peer-checked:bg-primary-50 transition-all duration-200 text-center">
+              <div class="text-2xl font-bold text-red-600 mb-2">Flooz</div>
+              <div class="text-sm font-semibold text-gray-900">Mobile Money</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Carte bancaire -->
+        <div id="card-payment" class="payment-section" *ngIf="paymentMethod === 'card'">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Informations de carte</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Numéro de carte</label>
+              <div class="border-2 border-gray-300 rounded-xl p-4 focus-within:border-primary-600 transition-colors duration-200">
+                <input type="text" [(ngModel)]="cardNumber" placeholder="1234 5678 9012 3456" class="w-full outline-none text-gray-900" maxlength="19">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Date d'expiration</label>
+                <div class="border-2 border-gray-300 rounded-xl p-4 focus-within:border-primary-600 transition-colors duration-200">
+                  <input type="text" [(ngModel)]="cardExpiry" placeholder="MM/AA" class="w-full outline-none text-gray-900" maxlength="5">
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">CVC</label>
+                <div class="border-2 border-gray-300 rounded-xl p-4 focus-within:border-primary-600 transition-colors duration-200">
+                  <input type="text" [(ngModel)]="cardCvc" placeholder="123" class="w-full outline-none text-gray-900" maxlength="3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Money (Moov/Flooz) -->
+        <div id="mobile-money-payment" class="payment-section" *ngIf="paymentMethod === 'moov' || paymentMethod === 'flooz'">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Numéro Mobile Money</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Numéro de téléphone *</label>
+              <div class="flex gap-2">
+                <select [(ngModel)]="phoneCountry" class="px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200">
+                  <option value="+228">+228 (Togo)</option>
+                  <option value="+229">+229 (Bénin)</option>
+                  <option value="+225">+225 (Côte d'Ivoire)</option>
+                </select>
+                <input type="tel" [(ngModel)]="phoneNumber" placeholder="90 12 34 56" class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" maxlength="10">
+              </div>
+              <p class="text-xs text-gray-500 mt-2">
+                <i class="fa-solid fa-info-circle mr-1"></i>
+                Vous recevrez une notification sur votre téléphone pour valider le paiement
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Résumé de la commande -->
+    <div class="lg:col-span-1">
+      <div class="bg-gradient-to-br from-primary-50 to-purple-50 rounded-2xl shadow-soft p-6 sticky top-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">Résumé</h2>
+        
+        <div class="bg-white rounded-xl p-4 mb-4" *ngIf="selectedSubscription">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-semibold text-gray-900">{{ selectedSubscription.nom }}</span>
+            <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-bold">{{ selectedSubscription.type }}</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-4">{{ selectedSubscription.nombreScrapingMax }} recherches • {{ selectedSubscription.duree }} jours</p>
+          
+          <div class="border-t border-gray-200 pt-4 space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-600">Abonnement</span>
+              <span class="font-semibold text-gray-900">{{ selectedSubscription.cout }} FCFA</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl p-4 mb-6" *ngIf="selectedSubscription">
+          <div class="flex justify-between items-center">
+            <span class="text-lg font-bold text-gray-900">Total</span>
+            <span class="text-2xl font-black text-gray-900">{{ getTotalAmount() }} FCFA</span>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">Valable {{ selectedSubscription.duree }} jours</p>
+        </div>
+        
+        <button (click)="confirmPayment()" [disabled]="isProcessing" class="w-full py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200 mb-4 disabled:opacity-50 disabled:cursor-not-allowed">
+          <i [class]="isProcessing ? 'fa-solid fa-spinner fa-spin mr-2' : 'fa-solid fa-lock mr-2'"></i>
+          {{ isProcessing ? 'Traitement en cours...' : 'Confirmer le paiement' }}
+        </button>
+        
+        <div class="flex items-center justify-center gap-2 text-sm text-gray-600">
+          <i class="fa-solid fa-shield-halved text-green-600"></i>
+          <span>Paiement sécurisé par Stripe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historique des paiements -->
+  <div class="mt-8 bg-white rounded-2xl shadow-soft p-6">
+    <h2 class="text-xl font-bold text-gray-900 mb-6">Historique des paiements</h2>
+    
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Date</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Description</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Montant</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Statut</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of paymentHistory" class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+            <td class="py-4 px-4 text-sm text-gray-900">{{ payment.datePaiement | date:'dd/MM/yyyy' }}</td>
+            <td class="py-4 px-4 text-sm text-gray-900">{{ payment.typeAbonnement?.nom || 'Abonnement' }}</td>
+            <td class="py-4 px-4 text-sm font-semibold text-gray-900">{{ payment.montant }} FCFA</td>
+            <td class="py-4 px-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold"
+                    [ngClass]="{
+                      'bg-green-100 text-green-700': payment.statut === 'SUCCESS',
+                      'bg-yellow-100 text-yellow-700': payment.statut === 'PENDING',
+                      'bg-red-100 text-red-700': payment.statut === 'FAILED'
+                    }">
+                {{ payment.statut === 'SUCCESS' ? 'Payé' : payment.statut === 'PENDING' ? 'En attente' : 'Échoué' }}
+              </span>
+            </td>
+            <td class="py-4 px-4">
+              <button (click)="downloadInvoice(payment)" 
+                      class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
+                      title="Télécharger le reçu">
+                <i class="fa-solid fa-file-pdf"></i>
+                <span class="text-sm">Télécharger</span>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="paymentHistory.length === 0">
+            <td colspan="5" class="py-8 text-center text-gray-500">
+              <i class="fa-solid fa-inbox text-4xl mb-2"></i>
+              <p>Aucun paiement effectué</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

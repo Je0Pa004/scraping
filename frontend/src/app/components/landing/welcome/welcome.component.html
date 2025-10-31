@@ -1,0 +1,325 @@
+<!-- Modern Landing Page with Tailwind -->
+<div class="min-h-screen bg-white">
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
+            <i class="fa-solid fa-bolt text-white"></i>
+          </div>
+          <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">ScrapingPro</span>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200">Fonctionnalités</a>
+          <a href="#pricing" class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200">Tarifs</a>
+          <a href="#contact" class="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200">Contact</a>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <a routerLink="/login" class="px-4 py-2 text-gray-700 font-semibold hover:bg-gray-100 rounded-lg transition-colors duration-200">
+            Connexion
+          </a>
+          <a routerLink="/register" class="px-4 py-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-200">
+            Commencer
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-50 via-purple-50 to-pink-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-soft mb-6">
+            <i class="fa-solid fa-sparkles text-primary-600"></i>
+            <span class="text-sm font-semibold text-gray-700">Propulsé par l'IA</span>
+          </div>
+          
+          <h1 class="text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-6">
+            Trouvez les meilleurs <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">talents</span> en quelques clics
+          </h1>
+          
+          <p class="text-xl text-gray-600 mb-8">
+            Notre plateforme IA analyse des milliers de profils pour vous proposer les candidats parfaits. Gagnez du temps et recrutez mieux.
+          </p>
+          
+          <div class="flex flex-wrap gap-4">
+            <a routerLink="/register" class="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200 inline-flex items-center gap-2">
+              <span>Essayer gratuitement</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#features" class="px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition-colors duration-200">
+              En savoir plus
+            </a>
+          </div>
+          
+          <div class="flex items-center gap-8 mt-12">
+            <div>
+              <div class="text-3xl font-black text-gray-900">10K+</div>
+              <div class="text-sm text-gray-600">Utilisateurs actifs</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black text-gray-900">50K+</div>
+              <div class="text-sm text-gray-600">Candidats trouvés</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black text-gray-900">95%</div>
+              <div class="text-sm text-gray-600">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hidden lg:block">
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-secondary-600/20 rounded-3xl blur-3xl"></div>
+            <div class="relative bg-white rounded-3xl shadow-soft-xl p-8">
+              <div class="space-y-4">
+                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600"></div>
+                  <div class="flex-1">
+                    <div class="h-3 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div class="h-2 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                  <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-bold">95%</span>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-600 to-teal-600"></div>
+                  <div class="flex-1">
+                    <div class="h-3 bg-gray-200 rounded w-2/3 mb-2"></div>
+                    <div class="h-2 bg-gray-200 rounded w-1/3"></div>
+                  </div>
+                  <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-bold">92%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-black text-gray-900 mb-4">Fonctionnalités puissantes</h2>
+        <p class="text-xl text-gray-600">Tout ce dont vous avez besoin pour recruter efficacement</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-robot text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">IA Avancée</h3>
+          <p class="text-gray-600">Notre IA analyse les CV et trouve les meilleurs matchs pour vos besoins.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-600 to-teal-600 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-gauge-high text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Résultats Rapides</h3>
+          <p class="text-gray-600">Obtenez vos résultats en quelques minutes, pas en quelques jours.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-chart-line text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Analytics</h3>
+          <p class="text-gray-600">Suivez vos performances et optimisez votre processus de recrutement.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-600 to-rose-600 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-shield-halved text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Sécurité</h3>
+          <p class="text-gray-600">Vos données sont cryptées et protégées selon les normes les plus strictes.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-600 to-green-600 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-users text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Collaboration</h3>
+          <p class="text-gray-600">Travaillez en équipe et partagez facilement vos recherches.</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8 hover:shadow-soft-lg transition-shadow duration-200">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center mb-6">
+            <i class="fa-solid fa-download text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Export</h3>
+          <p class="text-gray-600">Exportez vos données dans le format de votre choix.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-black text-gray-900 mb-4">Tarifs simples et transparents</h2>
+        <p class="text-xl text-gray-600">Choisissez le plan qui vous convient</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-soft p-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Free</h3>
+          <div class="mb-6">
+            <span class="text-5xl font-black text-gray-900">{{ 0 | currency:'XOF':'symbol':'1.0-0' }}</span>
+            <span class="text-gray-600">/mois</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">5 recherches/mois</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">20 candidats max</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Support email</span>
+            </li>
+          </ul>
+          <a routerLink="/register" class="block w-full py-3 text-center border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition-colors duration-200">
+            Commencer
+          </a>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft-lg p-8 border-2 border-primary-600 relative">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-primary-600 text-white text-sm font-bold rounded-full">
+            Populaire
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+          <div class="mb-6">
+            <span class="text-5xl font-black text-gray-900">{{ 49 | currency:'XOF':'symbol':'1.0-0' }}</span>
+            <span class="text-gray-600">/mois</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">25 recherches/mois</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Candidats illimités</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Support prioritaire</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Export données</span>
+            </li>
+          </ul>
+          <a routerLink="/register" class="block w-full py-3 text-center bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+            Commencer
+          </a>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-soft p-8">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+          <div class="mb-6">
+            <span class="text-5xl font-black text-gray-900">{{ 99 | currency:'XOF':'symbol':'1.0-0' }}</span>
+            <span class="text-gray-600">/mois</span>
+          </div>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">100 recherches/mois</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Candidats illimités</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Support 24/7</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">API access</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa-solid fa-check text-green-600"></i>
+              <span class="text-gray-700">Multi-users</span>
+            </li>
+          </ul>
+          <a routerLink="/register" class="block w-full py-3 text-center bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+            Commencer
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-primary-600 to-secondary-600">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-black text-white mb-6">Prêt à transformer votre recrutement?</h2>
+      <p class="text-xl text-white/90 mb-8">Rejoignez des milliers d'entreprises qui recrutent déjà avec ScrapingPro</p>
+      <a routerLink="/register" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+        <span>Commencer gratuitement</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
+              <i class="fa-solid fa-bolt text-white"></i>
+            </div>
+            <span class="text-xl font-bold">ScrapingPro</span>
+          </div>
+          <p class="text-gray-400">Trouvez les meilleurs talents avec l'IA</p>
+        </div>
+        
+        <div>
+          <h4 class="font-bold mb-4">Produit</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#features" class="hover:text-white transition-colors duration-200">Fonctionnalités</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors duration-200">Tarifs</a></li>
+            <li><a routerLink="/login" class="hover:text-white transition-colors duration-200">Connexion</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold mb-4">Entreprise</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors duration-200">À propos</a></li>
+            <li><a href="#" class="hover:text-white transition-colors duration-200">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition-colors duration-200">Carrières</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-bold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><i class="fa-solid fa-phone mr-2"></i>+228 90913172</li>
+            <li><i class="fa-solid fa-envelope mr-2"></i>jeanpaulsossu0&#64;gmail.com</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2025 ScrapingPro. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+</div>

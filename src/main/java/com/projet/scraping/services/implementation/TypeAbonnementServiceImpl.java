@@ -53,4 +53,13 @@ public class TypeAbonnementServiceImpl implements TypeAbonnementService {
     public void delete(Long id) {
         typeAbonnementRepository.deleteById(id);
     }
+
+    @Override
+    public TypeAbonnementResponse toggleStatus(Long id) {
+        TypeAbonnement e = typeAbonnementRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("TypeAbonnement introuvable: " + id));
+        e.setEstActif(!e.getEstActif());
+        e = typeAbonnementRepository.save(e);
+        return typeAbonnementMapper.toResponse(e);
+    }
 }

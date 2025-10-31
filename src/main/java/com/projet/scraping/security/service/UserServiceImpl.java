@@ -16,6 +16,10 @@ import com.projet.scraping.security.model.User;
 import com.projet.scraping.security.repository.HistoryRepository;
 import com.projet.scraping.security.repository.RoleRepository;
 import com.projet.scraping.security.repository.UserRepository;
+import com.projet.scraping.entities.enums.UserStatus;
+import com.projet.scraping.entities.enums.AccountType;
+import com.projet.scraping.repositories.AbonnementRepository;
+import java.time.LocalDate;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,9 +47,10 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final HistoryRepository historyRepository;
     private final RoleRepository roleRepository;
+    private final AbonnementRepository abonnementRepository;
     private final UserDetailsService userDetailsService; // TODO: Remove if not needed
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserRepository userRepository, UserMapper userMapper, HistoryRepository historyRepository, RoleRepository roleRepository, UserDetailsService userDetailsService) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserRepository userRepository, UserMapper userMapper, HistoryRepository historyRepository, RoleRepository roleRepository, UserDetailsService userDetailsService, AbonnementRepository abonnementRepository) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
@@ -54,6 +59,7 @@ public class UserServiceImpl implements UserService {
         this.historyRepository = historyRepository;
         this.roleRepository = roleRepository;
         this.userDetailsService = userDetailsService;
+        this.abonnementRepository = abonnementRepository;
     }
     @Override
     public AuthenticationResponse authenticate(LoginDTO loginDTO) {
@@ -65,6 +71,38 @@ public class UserServiceImpl implements UserService {
         if (user != null && !user.isEnable()) {
             throw new AccountDisabledException("Votre compte est désactivé. Contactez l'administrateur.");
         }else{
+            // Ensure roles align with subscription status at login time
+            if (user != null) {
+                String expected = "ROLE_GUEST";
+                boolean isAdmin = user.getRoles() != null && user.getRoles().toUpperCase().contains("ROLE_ADMIN");
+                if (!isAdmin) {
+                    boolean hasActive = abonnementRepository.findTopByUtilisateur_IdOrderByDateDebutDesc(user.getId())
+                            .map(ab -> {
+                                boolean statusOk = Boolean.TRUE.equals(ab.getStatut());
+                                LocalDate end = ab.getDateFin();
+                                return statusOk && end != null && !end.isBefore(LocalDate.now());
+                            })
+                            .orElse(false);
+                    expected = hasActive ? "ROLE_USER" : "ROLE_GUEST";
+                } else {
+                    expected = user.getRoles();
+                }
+
+                java.util.function.Function<String, String> normalize = (s) -> {
+                    if (s == null || s.isBlank()) return "";
+                    return java.util.Arrays.stream(s.split(","))
+                            .map(String::trim)
+                            .filter(str -> !str.isEmpty())
+                            .map(String::toUpperCase)
+                            .sorted()
+                            .reduce((a,b) -> a + "," + b).orElse("");
+                };
+
+                if (!normalize.apply(user.getRoles()).equals(normalize.apply(expected))) {
+                    user.setRoles(expected);
+                    userRepository.save(user);
+                }
+            }
             try {
 
                 Authentication authentication = authenticationManager.authenticate(
@@ -84,7 +122,16 @@ public class UserServiceImpl implements UserService {
 
                 createHistory(userDetails.getId());
 
-                return new AuthenticationResponse(token, "Bearer", "Login successful", userDetails.getId(), userDetails.getFullName(), userDetails.getUsername(), roles);
+                return AuthenticationResponse.builder()
+                        .token(token)
+                        .tokenType("Bearer")
+                        .message("Login successful")
+                        .id(userDetails.getId())
+                        .fullName(userDetails.getFullName())
+                        .username(userDetails.getUsername())
+                        .roles(roles)
+                        .typeCompte(user != null && user.getTypeCompte() != null ? user.getTypeCompte().name() : null)
+                        .build();
 
             } catch (BadCredentialsException ex) {
                 throw new InvalidCredentialsException("Les paramètres de connexion sont incorrectes");
@@ -123,20 +170,13 @@ public class UserServiceImpl implements UserService {
 
         user.setCodeMinistere(user.getCodeMinistere());*/
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRoles(userDTO.getRoles() != null ? userDTO.getRoles() : "USER");
         user.setEnable(true);
-        user.setStatut(com.projet.scraping.security.model.User.UserStatus.ACTIVE);
+        user.setStatut(UserStatus.ACTIVE);
 
-        // Set account type - default to USER if not specified
-        if (userDTO.getTypeCompte() != null && !userDTO.getTypeCompte().isEmpty()) {
-            try {
-                user.setTypeCompte(com.projet.scraping.security.model.User.AccountType.valueOf(userDTO.getTypeCompte()));
-            } catch (IllegalArgumentException e) {
-                user.setTypeCompte(com.projet.scraping.security.model.User.AccountType.USER);
-            }
-        } else {
-            user.setTypeCompte(com.projet.scraping.security.model.User.AccountType.USER);
-        }
+        // Unify user: always AccountType.USER at registration
+        user.setTypeCompte(AccountType.USER);
+        // Start with ROLE_GUEST until payment/subscription
+        user.setRoles("ROLE_GUEST");
 
         //Optional<User> user1 = userRepository.findByPublicId(userDTO.getPublicId());
         User savedUser = userRepository.save(user);

@@ -20,7 +20,7 @@ public class AbonnementRequest {
     private Boolean statut;
 
     @NotNull @Positive
-    private Integer nombreScraping;
+    private Integer quotaUtilise;
 
     @NotNull
     private UUID typeAbonnementPublicId;

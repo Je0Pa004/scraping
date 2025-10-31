@@ -1,0 +1,272 @@
+<div class="space-y-6 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-black text-gray-900 dark:text-white mb-2">
+       Tableau de Bord
+    </h1>
+    <p class="text-gray-600 dark:text-gray-400">Vue d'ensemble de votre plateforme</p>
+  </div>
+
+  <!-- Stats Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Total Users Card -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <i class="fa-solid fa-users text-2xl"></i>
+          </div>
+          <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
+            Total
+          </span>
+        </div>
+        <p class="text-sm opacity-90 mb-1">Utilisateurs</p>
+        <p class="text-4xl font-black">{{ totalUsers }}</p>
+      </div>
+    </div>
+
+    <!-- Active Subscriptions Card -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-green-500 to-emerald-700 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <i class="fa-solid fa-check-circle text-2xl"></i>
+          </div>
+          <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold flex items-center gap-1">
+            <i class="fa-solid fa-arrow-up text-xs"></i>
+            12%
+          </span>
+        </div>
+        <p class="text-sm opacity-90 mb-1">Abonnements Actifs</p>
+        <p class="text-4xl font-black">{{ activeSubscriptions }}</p>
+      </div>
+    </div>
+
+    <!-- Monthly Revenue Card -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <i class="fa-solid fa-coins text-2xl"></i>
+          </div>
+          <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold flex items-center gap-1">
+            <i class="fa-solid fa-arrow-up text-xs"></i>
+            23%
+          </span>
+        </div>
+        <p class="text-sm opacity-90 mb-1">Revenus du Mois</p>
+        <p class="text-4xl font-black">{{ monthlyRevenue }} FCFA</p>
+      </div>
+    </div>
+
+    <!-- New Registrations Card -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+      <div class="relative">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+            <i class="fa-solid fa-user-plus text-2xl"></i>
+          </div>
+          <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold">
+            Ce mois
+          </span>
+        </div>
+        <p class="text-sm opacity-90 mb-1">Nouveaux Inscrits</p>
+        <p class="text-4xl font-black">{{ newRegistrations }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts and Activity Section -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+    <!-- Chart Card - User Growth -->
+    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Croissance des Utilisateurs</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">7 derniers jours</p>
+        </div>
+        <button class="px-4 py-2 text-sm text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
+          Voir rapport <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+
+      <!-- Fake Chart with CSS -->
+      <div class="relative h-64">
+        <!-- Y-axis labels -->
+        <div class="absolute left-0 top-0 bottom-0 w-12 flex flex-col justify-between text-xs text-gray-500 dark:text-gray-400 py-4">
+          <span>100</span>
+          <span>75</span>
+          <span>50</span>
+          <span>25</span>
+          <span>0</span>
+        </div>
+
+        <!-- Chart area -->
+        <div class="ml-12 h-full flex items-end gap-2">
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg transition-all duration-500 hover:from-blue-600 hover:to-blue-500" style="height: 60%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Lun</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-purple-500 to-purple-400 rounded-t-lg transition-all duration-500 hover:from-purple-600 hover:to-purple-500" style="height: 45%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Mar</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg transition-all duration-500 hover:from-blue-600 hover:to-blue-500" style="height: 75%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Mer</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-purple-500 to-purple-400 rounded-t-lg transition-all duration-500 hover:from-purple-600 hover:to-purple-500" style="height: 55%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Jeu</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg transition-all duration-500 hover:from-blue-600 hover:to-blue-500" style="height: 85%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Ven</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-purple-500 to-purple-400 rounded-t-lg transition-all duration-500 hover:from-purple-600 hover:to-purple-500" style="height: 70%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Sam</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-2">
+            <div class="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-lg transition-all duration-500 hover:from-blue-600 hover:to-blue-500" style="height: 90%"></div>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Dim</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legend -->
+      <div class="flex items-center justify-center gap-6 mt-6">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+          <span class="text-sm text-gray-600 dark:text-gray-400">Nouveaux utilisateurs</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+          <span class="text-sm text-gray-600 dark:text-gray-400">Utilisateurs actifs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Activité Récente</h3>
+      
+      <div class="space-y-4">
+        <div *ngFor="let activity of recentActivities" class="flex items-start gap-3 pb-4 border-b border-gray-100 dark:border-gray-700 last:border-0 last:pb-0">
+          <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm text-gray-900 dark:text-white font-medium truncate">{{ activity.description }}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ activity.time }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="recentActivities.length === 0" class="text-center py-8">
+          <i class="fa-solid fa-inbox text-4xl text-gray-300 dark:text-gray-600 mb-2"></i>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Aucune activité récente</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Distribution -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- Progress Bars Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Distribution des Utilisateurs</h3>
+      
+      <div class="space-y-6">
+        <!-- Free Users -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateurs Gratuits</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">{{ totalUsers > 0 ? ((totalUsers - activeSubscriptions) / totalUsers * 100).toFixed(0) : 0 }}%</span>
+          </div>
+          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-gray-400 to-gray-500 rounded-full transition-all duration-1000" [style.width.%]="totalUsers > 0 ? ((totalUsers - activeSubscriptions) / totalUsers * 100) : 0"></div>
+          </div>
+        </div>
+
+        <!-- Premium Users -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateurs Premium</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">{{ totalUsers > 0 ? (activeSubscriptions / totalUsers * 100).toFixed(0) : 0 }}%</span>
+          </div>
+          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full transition-all duration-1000" [style.width.%]="totalUsers > 0 ? (activeSubscriptions / totalUsers * 100) : 0"></div>
+          </div>
+        </div>
+
+        <!-- Active Users (fake data) -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateurs Actifs (7j)</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">78%</span>
+          </div>
+          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-green-500 to-emerald-600 rounded-full transition-all duration-1000" style="width: 78%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Statistiques Rapides</h3>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-search text-white"></i>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-blue-600 dark:text-blue-400">{{ totalUsers * 12 }}</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Recherches</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-file-alt text-white"></i>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-green-600 dark:text-green-400">{{ totalUsers * 45 }}</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Profils</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-chart-line text-white"></i>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-purple-600 dark:text-purple-400">+23%</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Croissance</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-orange-50 dark:bg-orange-900/20 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center">
+              <i class="fa-solid fa-star text-white"></i>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-orange-600 dark:text-orange-400">4.8</p>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Satisfaction</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

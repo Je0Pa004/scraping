@@ -1,0 +1,177 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h2 class="register-title">Create Account</h2>
+      <p class="register-subtitle">Join us to start your recruitment journey</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Name Fields -->
+      <div class="name-row">
+        <div class="form-group">
+          <label for="firstName" class="form-label">First Name</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-user"></i>
+            </span>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              class="form-control"
+              placeholder="John"
+              [class.is-invalid]="firstName?.invalid && firstName?.touched"
+              [class.is-valid]="firstName?.valid && firstName?.touched">
+          </div>
+          <div class="invalid-feedback" *ngIf="firstName?.invalid && firstName?.touched">
+            <span *ngIf="firstName?.errors?.['required']">First name is required</span>
+            <span *ngIf="firstName?.errors?.['minlength']">First name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-label">Last Name</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fas fa-user"></i>
+            </span>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              class="form-control"
+              placeholder="Doe"
+              [class.is-invalid]="lastName?.invalid && lastName?.touched"
+              [class.is-valid]="lastName?.valid && lastName?.touched">
+          </div>
+          <div class="invalid-feedback" *ngIf="lastName?.invalid && lastName?.touched">
+            <span *ngIf="lastName?.errors?.['required']">Last name is required</span>
+            <span *ngIf="lastName?.errors?.['minlength']">Last name must be at least 2 characters</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="john.doe@example.com"
+            [class.is-invalid]="email?.invalid && email?.touched"
+            [class.is-valid]="email?.valid && email?.touched">
+        </div>
+        <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email address</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Create a strong password"
+            [class.is-invalid]="password?.invalid && password?.touched"
+            [class.is-valid]="password?.valid && password?.touched">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="togglePasswordVisibility('password')"
+            tabindex="-1">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+        <div class="password-requirements" *ngIf="password?.touched">
+          <small class="text-muted">
+            Password must contain at least 8 characters with uppercase, lowercase, number, and special character.
+          </small>
+        </div>
+        <div class="invalid-feedback" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">Password must be at least 8 characters</span>
+          <span *ngIf="password?.errors?.['invalidPassword']">Password must include uppercase, lowercase, number, and special character</span>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            class="form-control"
+            placeholder="Confirm your password"
+            [class.is-invalid]="(confirmPassword?.invalid && confirmPassword?.touched) || registerForm?.errors?.['passwordMismatch']"
+            [class.is-valid]="confirmPassword?.valid && confirmPassword?.touched && !registerForm?.errors?.['passwordMismatch']">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="togglePasswordVisibility('confirmPassword')"
+            tabindex="-1">
+            <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="(confirmPassword?.invalid && confirmPassword?.touched) || registerForm?.errors?.['passwordMismatch']">
+          <span *ngIf="confirmPassword?.errors?.['required']">Please confirm your password</span>
+          <span *ngIf="registerForm?.errors?.['passwordMismatch']">Passwords do not match</span>
+        </div>
+      </div>
+
+      <!-- Terms and Conditions -->
+      <div class="form-group">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            id="acceptTerms"
+            formControlName="acceptTerms"
+            class="form-check-input"
+            [class.is-invalid]="acceptTerms?.invalid && acceptTerms?.touched">
+          <label for="acceptTerms" class="form-check-label">
+            I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a>
+          </label>
+        </div>
+        <div class="invalid-feedback" *ngIf="acceptTerms?.invalid && acceptTerms?.touched">
+          You must accept the terms and conditions to continue
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 register-btn"
+        [disabled]="isLoading">
+        <span *ngIf="isLoading" class="loader-custom me-2"></span>
+        <i class="fas fa-user-plus me-2" *ngIf="!isLoading"></i>
+        {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="register-footer">
+      <p class="mb-0">
+        Already have an account?
+        <a routerLink="/auth/login" class="login-link">Sign in here</a>
+      </p>
+    </div>
+  </div>
+</div>

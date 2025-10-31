@@ -2,6 +2,7 @@ package com.projet.scraping.security.api;
 
 import com.projet.scraping.DtoResponse.AuthenticationResponse;
 import com.projet.scraping.security.dto.HistoryReponse;
+import com.projet.scraping.Exeption.AlreadyExistException;
 import com.projet.scraping.security.dto.LoginDTO;
 import com.projet.scraping.security.dto.PasswordDTO;
 import com.projet.scraping.security.dto.RoleDTO;
@@ -19,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name = "Gestion des utilisateurs", description = "Point d'entrée des utilisateurs")
@@ -49,15 +51,16 @@ public class UserApi {
                     )
             }
     )
-    public ResponseEntity<UserDTO> register(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<?> register(@RequestBody @Valid UserDTO userDTO) {
         try {
             var created = userService.saveUser(userDTO);
             return new ResponseEntity<>(created, HttpStatus.CREATED);
+        } catch (AlreadyExistException ex) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "Cet email est déjà utilisé."));
         } catch (Exception ex) {
-            if (ex.getMessage() != null && ex.getMessage().contains("existe déjà")) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Erreur interne lors de l'inscription."));
         }
     }
 
@@ -76,12 +79,22 @@ public class UserApi {
                     )
             }
     )
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid LoginDTO loginDTO) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO) {
         try {
             var authResponse = (AuthenticationResponse) userService.authenticate(loginDTO);
             return ResponseEntity.ok(authResponse);
+        } catch (com.projet.scraping.Exeption.AccountDisabledException ex) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(java.util.Map.of("message", ex.getMessage()));
+        } catch (com.projet.scraping.Exeption.InvalidCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(java.util.Map.of("message", ex.getMessage()));
+        } catch (com.projet.scraping.Exeption.ResourceNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(java.util.Map.of("message", "Identifiants incorrects."));
         } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(java.util.Map.of("message", "Erreur d'authentification."));
         }
     }
     @PostMapping("/users")

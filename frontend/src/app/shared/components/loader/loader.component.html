@@ -1,0 +1,10 @@
+<div class="loader-container" [class.overlay]="overlay">
+  <div class="loader-wrapper">
+    <div class="spinner" [style.width]="loaderSize" [style.height]="loaderSize">
+      <div class="spinner-border" [style.width]="spinnerSize" [style.height]="spinnerSize" [style.border-color]="color" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="loader-message" *ngIf="showMessage">{{ message }}</div>
+  </div>
+</div>

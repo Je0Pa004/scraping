@@ -40,4 +40,9 @@ public class Paiement extends BaseEntity {
     @JoinColumn(name = "utilisateur_id")
     @JsonIgnore
     private User utilisateur;
+
+    @ManyToOne
+    @JoinColumn(name = "abonnement_id")
+    @JsonIgnore
+    private Abonnement abonnement;
 }

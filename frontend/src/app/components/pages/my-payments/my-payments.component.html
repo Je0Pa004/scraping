@@ -1,0 +1,45 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="mb-6">
+    <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-1">💳 Mes paiements</h1>
+    <p class="text-gray-600 dark:text-gray-400">Historique de vos transactions</p>
+  </div>
+
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Historique</h2>
+      <span *ngIf="isLoading" class="text-sm text-gray-500">Chargement...</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Référence</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Abonnement</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Montant</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Date</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Méthode</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Statut</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <tr *ngFor="let p of payments" class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6 font-mono text-sm text-gray-900 dark:text-white">{{ p.publicId || p.id }}</td>
+            <td class="py-4 px-6 text-gray-900 dark:text-white">{{ p.typeAbonnement?.nom || p.plan || '—' }}</td>
+            <td class="py-4 px-6 font-bold text-gray-900 dark:text-white">{{ (p.montant || p.amount) | currency:'XOF':'symbol':'1.0-0' }}</td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">{{ (p.datePaiement || p.date) | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="py-4 px-6 text-sm text-gray-900 dark:text-white">{{ p.methode || p.method || '—' }}</td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 rounded-full text-xs font-bold" [ngClass]="statusBadgeClass(p.statut || p.status)">
+                {{ (p.statut || p.status) || '—' }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="!isLoading && payments.length === 0">
+            <td class="py-6 px-6 text-center text-gray-500" colspan="6">Aucun paiement pour le moment.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

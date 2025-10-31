@@ -1,0 +1,371 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2">👥 Gestion des Utilisateurs</h1>
+      <p class="text-gray-600 dark:text-gray-400">Gérer les comptes et les permissions</p>
+    </div>
+    <div class="flex gap-3">
+      <button (click)="exportToExcel()" class="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">
+        <i class="fa-solid fa-download mr-2"></i>
+        Exporter
+      </button>
+      <button (click)="openCreateModal()" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-200">
+        <i class="fa-solid fa-plus mr-2"></i>
+        Nouvel utilisateur
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+          <i class="fa-solid fa-users text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ totalUsers }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Utilisateurs totaux</div>
+      <div class="text-xs text-blue-600 dark:text-blue-400 mt-2">+{{ newUsersThisMonth }} ce mois</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">
+          <i class="fa-solid fa-check-circle text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ activeUsers }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Utilisateurs actifs</div>
+      <div class="text-xs text-green-600 dark:text-green-400 mt-2">{{ activePercentage }}% du total</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center">
+          <i class="fa-solid fa-crown text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ premiumUsers }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Utilisateurs Premium</div>
+      <div class="text-xs text-orange-600 dark:text-orange-400 mt-2">{{ premiumPercentage }}% du total</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+          <i class="fa-solid fa-ban text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ suspendedUsers }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Utilisateurs suspendus</div>
+      <div class="text-xs text-red-600 dark:text-red-400 mt-2">Nécessite attention</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Statut</label>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          <option value="all">Tous les statuts</option>
+          <option value="ACTIVE">Actif</option>
+          <option value="SUSPENDED">Suspendu</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Plan</label>
+        <select [(ngModel)]="selectedPlan" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          <option value="all">Tous les plans</option>
+          <option value="Basic">Basic</option>
+          <option value="Premium">Premium</option>
+          <option value="Aucun">Gratuit</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tri</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          <option value="date">Date d'inscription</option>
+          <option value="name">Nom</option>
+          <option value="searches">Recherches</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Rechercher</label>
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Nom, email..." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Liste des utilisateurs</h2>
+    </div>
+
+    <div *ngIf="loading" class="p-12 text-center">
+      <i class="fa-solid fa-spinner fa-spin text-4xl text-blue-600"></i>
+      <p class="text-gray-600 dark:text-gray-400 mt-4">Chargement...</p>
+    </div>
+
+    <div *ngIf="!loading && error" class="p-12 text-center">
+      <i class="fa-solid fa-exclamation-triangle text-4xl text-red-600"></i>
+      <p class="text-red-600 mt-4">{{ error }}</p>
+    </div>
+
+    <div *ngIf="!loading && !error" class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">ID</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Nom d'utilisateur</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Email</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Rôle</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Statut</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Date de création</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <tr *ngFor="let user of paginatedUsers" class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6">
+              <div class="font-mono text-sm text-gray-900 dark:text-white">{{ user.id }}</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">{{ user.fullName }}</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</div>
+            </td>
+            <td class="py-4 px-6">
+              <span 
+                class="px-3 py-1 rounded-full text-xs font-bold"
+                [ngClass]="{
+                  'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400': user.roles.includes('ADMIN'),
+                  'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400': user.roles.includes('USER') || user.roles === 'Utilisateur',
+                  'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400': user.roles.includes('RECRUTEUR'),
+                  'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400': user.roles.includes('ENTREPRISE')
+                }">
+                {{ user.roles || 'Utilisateur' }}
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <span 
+                class="px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 w-fit"
+                [ngClass]="{
+                  'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400': user.status === 'ACTIVE',
+                  'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400': user.status === 'SUSPENDED'
+                }">
+                <i class="fa-solid" [ngClass]="user.status === 'ACTIVE' ? 'fa-check' : 'fa-ban'"></i>
+                {{ user.status === 'ACTIVE' ? 'Actif' : 'Suspendu' }}
+              </span>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+              {{ user.registrationDate | date:'dd/MM/yyyy' }}
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <button 
+                  (click)="editUser(user)"
+                  class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" 
+                  title="Modifier">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button 
+                  *ngIf="user.status === 'ACTIVE'"
+                  (click)="suspendUser(user.id)"
+                  class="p-2 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-lg transition-colors duration-200" 
+                  title="Suspendre">
+                  <i class="fa-solid fa-ban"></i>
+                </button>
+                <button 
+                  *ngIf="user.status === 'SUSPENDED'"
+                  (click)="activateUser(user.id)"
+                  class="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200" 
+                  title="Activer">
+                  <i class="fa-solid fa-check-circle"></i>
+                </button>
+                <button 
+                  (click)="deleteUser(user.id)"
+                  class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" 
+                  title="Supprimer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="p-6 border-t border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          Affichage de {{ (currentPage - 1) * itemsPerPage + 1 }} à {{ Math.min(currentPage * itemsPerPage, filteredUsers.length) }} sur {{ filteredUsers.length }} utilisateurs
+        </div>
+        <div class="flex items-center gap-2">
+          <button 
+            (click)="previousPage()" 
+            [disabled]="currentPage === 1"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            Précédent
+          </button>
+          <button 
+            *ngFor="let page of [].constructor(totalPages); let i = index" 
+            [class.bg-blue-600]="i + 1 === currentPage"
+            [class.text-white]="i + 1 === currentPage"
+            (click)="currentPage = i + 1"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+            {{ i + 1 }}
+          </button>
+          <button 
+            (click)="nextPage()" 
+            [disabled]="currentPage === totalPages"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit/Create User -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" (click)="closeModal()">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+          {{ isEditMode ? 'Modifier l\'utilisateur' : 'Nouvel utilisateur' }}
+        </h2>
+        <button (click)="closeModal()" class="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <form (ngSubmit)="saveUser()" #userForm="ngForm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <!-- Nom complet -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              Nom complet *
+            </label>
+            <input 
+              type="text" 
+              [(ngModel)]="currentUser.fullName" 
+              name="fullName" 
+              required
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              Email *
+            </label>
+            <input 
+              type="email" 
+              [(ngModel)]="currentUser.email" 
+              name="email" 
+              required
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <!-- Rôle -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              Rôle *
+            </label>
+            <select 
+              [(ngModel)]="currentUser.roles" 
+              name="roles" 
+              required
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+              <option value="USER">Utilisateur</option>
+              <option value="ADMIN">Administrateur</option>
+              <option value="RECRUTEUR">Recruteur</option>
+              <option value="ENTREPRISE">Entreprise</option>
+            </select>
+          </div>
+
+          <!-- Statut -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              Statut *
+            </label>
+            <select 
+              [(ngModel)]="currentUser.status" 
+              name="status" 
+              required
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+              <option value="ACTIVE">Actif</option>
+              <option value="SUSPENDED">Suspendu</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Mot de passe (seulement pour création) -->
+        <div *ngIf="!isEditMode" class="mb-6">
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            Mot de passe *
+          </label>
+          <input 
+            type="password" 
+            [(ngModel)]="currentUser.password" 
+            name="password" 
+            [required]="!isEditMode"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3 justify-end">
+          <button 
+            type="button" 
+            (click)="closeModal()"
+            class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+            Annuler
+          </button>
+          <button 
+            type="submit" 
+            [disabled]="!userForm.valid"
+            class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Confirmation Delete -->
+  <div *ngIf="showDeleteModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" (click)="closeDeleteModal()">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md" (click)="$event.stopPropagation()">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+          <i class="fa-solid fa-trash text-red-600 dark:text-red-400 text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+          Confirmer la suppression
+        </h2>
+      </div>
+      
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ userToDelete?.fullName }}</strong> ? 
+        Cette action est irréversible.
+      </p>
+
+      <div class="flex gap-3 justify-end">
+        <button 
+          (click)="closeDeleteModal()"
+          class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+          Annuler
+        </button>
+        <button 
+          (click)="confirmDelete()"
+          class="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-200">
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

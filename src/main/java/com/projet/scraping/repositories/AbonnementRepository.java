@@ -23,4 +23,9 @@ public interface AbonnementRepository extends JpaRepository<Abonnement, Long> {
 
     @Query("select a from Abonnement a where a.utilisateur.publicId = :utilisateurPublicId and a.statut = true and a.dateFin >= :today order by a.dateDebut desc")
     List<Abonnement> findActiveSubscriptions(@Param("utilisateurPublicId") UUID utilisateurPublicId, @Param("today") LocalDate today);
+
+    // Per-user helpers
+    List<Abonnement> findByUtilisateur_PublicId(UUID utilisateurPublicId);
+
+    Optional<Abonnement> findByIdAndUtilisateur_PublicId(Long id, UUID utilisateurPublicId);
 }

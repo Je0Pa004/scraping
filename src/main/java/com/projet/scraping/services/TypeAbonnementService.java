@@ -12,4 +12,7 @@ public interface TypeAbonnementService {
     List<TypeAbonnementResponse> getAll();
     TypeAbonnementResponse update(Long id, TypeAbonnementRequest req);
     void delete(Long id);
+
+    // Toggle status
+    TypeAbonnementResponse toggleStatus(Long id);
 }

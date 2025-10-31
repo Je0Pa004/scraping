@@ -22,4 +22,5 @@ public class AuthenticationResponse {
     private String fullName;
     private String username;
     private List<String> roles;
+    private String typeCompte;
 }

@@ -1,0 +1,175 @@
+2025-10-08 08:34:53 | INFO     | scrapers.linkedin_scraper:search_profiles:75 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Data Scientist" France
+2025-10-08 08:40:48 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-08 08:40:48 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=Data Scientist, secteur=None, localisation=France
+2025-10-08 08:47:21 | INFO     | scrapers.linkedin_scraper_new:__init__:31 - LinkedIn scraper initialise avec token Bearer
+2025-10-08 08:47:21 | INFO     | scrapers.linkedin_scraper_new:search_profiles:44 - Recherche LinkedIn: titre=Data Scientist, localisation=France
+2025-10-08 08:47:21 | INFO     | scrapers.linkedin_scraper_new:search_profiles:66 - URL de recherche: https://api.linkedin.com/v2/people/search?title=Data Scientist&location=France&limit=2
+2025-10-08 08:47:23 | ERROR    | scrapers.linkedin_scraper_new:search_profiles:102 - Erreur lors de la recherche: 403 Client Error: Forbidden for url: https://api.linkedin.com/v2/people/search?title=Data%20Scientist&location=France&limit=2
+2025-10-08 08:51:14 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-08 08:51:14 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Developpeur Python', 'localisation': 'Paris', 'max_results': 3}
+2025-10-08 08:51:14 | ERROR    | __main__:main:142 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 148, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 46, in main
+    scraper = LinkedInScraper()
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 23, in __init__
+    raise RuntimeError(
+
+RuntimeError: Configuration LinkedIn API incomplète. Veuillez définir LINKEDIN_API_BASE_URL et LINKEDIN_API_TOKEN dans le fichier .env
+2025-10-08 08:58:30 | INFO     | __main__:main:57 - Action demandée: scrape_linkedin
+2025-10-08 08:58:30 | INFO     | __main__:main:58 - Paramètres: {'titre': 'Developpeur Python', 'localisation': 'Paris', 'max_results': 3}
+2025-10-08 08:58:30 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-08 08:58:30 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=Developpeur Python, secteur=None, localisation=Paris
+2025-10-08 08:58:33 | ERROR    | __main__:main:128 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 134, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 68, in main
+    results = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 55, in search_profiles
+    return self._api_search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 97, in _api_search_profiles
+    r.raise_for_status()
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.linkedin.com/v2/profiles/search?title=Developpeur+Python&location=Paris&limit=3
+2025-10-08 09:00:59 | INFO     | __main__:main:57 - Action demandée: scrape_linkedin
+2025-10-08 09:00:59 | INFO     | __main__:main:58 - Paramètres: {'titre': 'Developpeur Python', 'localisation': 'Paris', 'max_results': 3}
+2025-10-08 09:00:59 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-08 09:00:59 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=Developpeur Python, secteur=None, localisation=Paris
+2025-10-08 09:01:03 | ERROR    | __main__:main:128 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 494, in request
+    self.endheaders()
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 325, in connect
+    self.sock = self._new_conn()
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x000001DC15AFC830>: Failed to establish a new connection: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 644, in send
+    resp = conn.urlopen(
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /callback/profiles/search?title=Developpeur+Python&location=Paris&limit=3 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DC15AFC830>: Failed to establish a new connection: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée'))
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 134, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 68, in main
+    results = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 55, in search_profiles
+    return self._api_search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 96, in _api_search_profiles
+    r = self.session.get(endpoint, params=params, timeout=30)
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 677, in send
+    raise ConnectionError(e, request=request)
+
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=3000): Max retries exceeded with url: /callback/profiles/search?title=Developpeur+Python&location=Paris&limit=3 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DC15AFC830>: Failed to establish a new connection: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée'))
+2025-10-08 09:06:21 | INFO     | __main__:main:57 - Action demandée: scrape_linkedin
+2025-10-08 09:06:21 | INFO     | __main__:main:58 - Paramètres: {'titre': 'Developpeur Python', 'localisation': 'Paris', 'max_results': 3}
+2025-10-08 09:06:22 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-08 09:06:22 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=Developpeur Python, secteur=None, localisation=Paris
+2025-10-08 09:06:23 | ERROR    | __main__:main:128 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 134, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 68, in main
+    results = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 55, in search_profiles
+    return self._api_search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 97, in _api_search_profiles
+    r.raise_for_status()
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.linkedin.com/v2/profiles/search?title=Developpeur+Python&location=Paris&limit=3
+2025-10-08 09:16:42 | INFO     | __main__:main:57 - Action demandée: scrape_linkedin
+2025-10-08 09:16:42 | INFO     | __main__:main:58 - Paramètres: {'titre': 'Developpeur Python', 'localisation': 'Paris', 'max_results': 3}
+2025-10-08 09:16:43 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-08 09:16:43 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=Developpeur Python, secteur=None, localisation=Paris
+2025-10-08 09:16:44 | ERROR    | __main__:main:128 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 134, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 68, in main
+    results = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 55, in search_profiles
+    return self._api_search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 97, in _api_search_profiles
+    r.raise_for_status()
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.linkedin.com/v2/profiles/search?title=Developpeur+Python&location=Paris&limit=3

@@ -18,4 +18,5 @@ public class ScrapingRequest {
     private String entreprise;
     private String emploi;
     private String tailleEntreprise;
+    private Integer maxResults; // limite du nombre de profils à scraper
 }

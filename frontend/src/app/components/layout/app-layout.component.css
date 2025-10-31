@@ -1,0 +1,3 @@
+.nav .nav-link{border-radius:.5rem}
+.nav .nav-link.active{background-color:#0d6efd;color:#fff}
+nav{display:flex;flex-direction:column}

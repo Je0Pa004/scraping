@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/type-abonnements")
+@RequestMapping("/api/v1/type-abonnements")
 @RequiredArgsConstructor
 public class TypeAbonnementController {
 
@@ -40,5 +40,10 @@ public class TypeAbonnementController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         typeAbonnementService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/toggle-status")
+    public ResponseEntity<TypeAbonnementResponse> toggleStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(typeAbonnementService.toggleStatus(id));
     }
 }

@@ -22,12 +22,25 @@ public class TypeAbonnement extends BaseEntity {
     private String nom;
 
     @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
     private Double cout;
 
     @Column(nullable = false)
+    private Integer duree; // durée en jours
+
+    @Column(name = "nombre_scraping_max", nullable = false)
     private Integer nombreScrapingMax;
+
+    @Column(name = "nombre_profils_max", nullable = false)
+    private Integer nombreProfilsMax;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SubscriptionType type; // MENSUEL, TRIMESTRIEL, ANNUEL
+
+    @Column(name = "est_actif", nullable = false)
+    @Builder.Default
+    private Boolean estActif = true;
 }

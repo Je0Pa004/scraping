@@ -1,0 +1,48 @@
+2025-10-22 12:07:55 | INFO     | api:scrape:91 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'Développeut', 'secteur': 'informatique', 'localisation': 'Lomé', 'entreprise': 'Yas togo', 'emploi': '', 'taille_entreprise': '', 'keywords': 'Développeut', 'location': 'Lomé', 'profession': '', 'max_results': 20}
+2025-10-22 12:07:55 | ERROR    | api:scrape:138 - Error while scraping source=linkedin: Configuration LinkedIn API incomplète. Veuillez définir LINKEDIN_API_BASE_URL et LINKEDIN_API_TOKEN dans le fichier .env
+Traceback (most recent call last):
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1014, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 976, in run
+    result = context.run(func, *args)
+
+> File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\python\api.py", line 100, in scrape
+    scraper = LinkedInScraper()
+
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 23, in __init__
+    raise RuntimeError(
+
+RuntimeError: Configuration LinkedIn API incomplète. Veuillez définir LINKEDIN_API_BASE_URL et LINKEDIN_API_TOKEN dans le fichier .env
+2025-10-22 12:07:56 | INFO     | api:scrape:147 - /scrape returning 0 results
+2025-10-22 12:47:20 | INFO     | api:scrape:93 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'développeur', 'secteur': 'informatique', 'localisation': 'lomé', 'entreprise': 'yas togo', 'emploi': '', 'taille_entreprise': '', 'keywords': 'développeur', 'location': 'lomé', 'profession': '', 'max_results': 20}
+2025-10-22 12:47:20 | INFO     | scrapers.linkedin_scraper:__init__:30 - LinkedIn scraper initialisé avec l'API personnalisée
+2025-10-22 12:47:20 | INFO     | scrapers.linkedin_scraper:search_profiles:53 - Recherche LinkedIn: titre=développeur, secteur=informatique, localisation=lomé
+2025-10-22 12:47:26 | ERROR    | api:scrape:140 - Error while scraping source=linkedin: 404 Client Error: Not Found for url: https://api.linkedin.com/v2/profiles/search?title=d%C3%A9veloppeur&industry=informatique&location=lom%C3%A9&company=yas+togo&job=&company_size=&limit=20
+Traceback (most recent call last):
+
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1014, in _bootstrap
+    self._bootstrap_inner()
+  File "C:\Users\moise\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1043, in _bootstrap_inner
+    self.run()
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 976, in run
+    result = context.run(func, *args)
+
+> File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\python\api.py", line 103, in scrape
+    batch = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 55, in search_profiles
+    return self._api_search_profiles(
+
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 97, in _api_search_profiles
+    r.raise_for_status()
+
+  File "C:\Users\moise\Downloads\scraping\PYTHON\SCRAPPER\projet-scraping-fastapi\.venv\Lib\site-packages\requests\models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.linkedin.com/v2/profiles/search?title=d%C3%A9veloppeur&industry=informatique&location=lom%C3%A9&company=yas+togo&job=&company_size=&limit=20
+2025-10-22 12:47:26 | INFO     | api:scrape:149 - /scrape returning 0 results
+2025-10-22 12:48:14 | INFO     | api:scrape:93 - /scrape called with: {'source': 'google', 'sources': None, 'titre': 'développeur', 'secteur': '', 'localisation': 'lomé', 'entreprise': '', 'emploi': '', 'taille_entreprise': '', 'keywords': 'développeur', 'location': 'lomé', 'profession': '', 'max_results': 20}
+2025-10-22 12:50:24 | INFO     | api:scrape:149 - /scrape returning 10 results

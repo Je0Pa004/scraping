@@ -13,6 +13,8 @@ import java.util.UUID;
 public interface ScrapingRepository extends JpaRepository<Scraping, Long> {
 
     Optional<Scraping> findByPublicId(UUID publicId);
+    
+    int countByUtilisateur(com.projet.scraping.security.model.User utilisateur);
 
     @Query("select coalesce(sum(s.nombreProfilScrape),0) from Scraping s where s.utilisateur.id = :uid and s.dateDemande between :start and :end")
     long sumProfilesInPeriod(@Param("uid") Long utilisateurId,
@@ -21,4 +23,10 @@ public interface ScrapingRepository extends JpaRepository<Scraping, Long> {
 
     @Query("select coalesce(sum(s.nombreProfilScrape),0) from Scraping s where s.utilisateur.id = :userId")
     long sumNombreProfilScrapeByUtilisateurId(@Param("userId") Long userId);
+
+    java.util.List<Scraping> findByUtilisateur_PublicId(UUID utilisateurPublicId);
+
+    Optional<Scraping> findByIdAndUtilisateur_PublicId(Long id, UUID utilisateurPublicId);
+
+    Optional<Scraping> findByPublicIdAndUtilisateur_PublicId(UUID publicId, UUID utilisateurPublicId);
 }

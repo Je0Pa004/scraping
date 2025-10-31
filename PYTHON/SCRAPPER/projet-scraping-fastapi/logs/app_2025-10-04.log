@@ -1,0 +1,13 @@
+2025-10-04 12:10:34 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-04 12:10:43 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-04 12:11:46 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-04 12:11:46 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Développeur', 'localisation': 'Lomé', 'secteur': 'Informatique', 'entreprise': 'yas togo', 'max_results': 5}
+2025-10-04 12:11:47 | INFO     | scrapers.linkedin_scraper:search_profiles:74 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Développeur" Lomé Informatique yas togo
+2025-10-04 12:17:26 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-04 12:19:53 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-04 12:20:19 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-04 12:20:19 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Développeur', 'localisation': 'Lomé', 'secteur': 'Informatique', 'entreprise': 'Odda Technology', 'max_results': 10}
+2025-10-04 12:20:20 | INFO     | scrapers.linkedin_scraper:search_profiles:74 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Développeur" Lomé Informatique Odda Technology
+2025-10-04 12:39:18 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-04 12:39:18 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Développeur java', 'localisation': 'Lomé', 'secteur': 'Informatique', 'max_results': 30}
+2025-10-04 12:39:18 | INFO     | scrapers.linkedin_scraper:search_profiles:75 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Développeur java" Lomé Informatique

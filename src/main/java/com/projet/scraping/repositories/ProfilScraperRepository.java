@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Optional;
 
 public interface ProfilScraperRepository extends JpaRepository<ProfilScraper, Long> {
 
@@ -16,4 +17,15 @@ public interface ProfilScraperRepository extends JpaRepository<ProfilScraper, Lo
 
     @Query("select count(p) from ProfilScraper p where p.scraping.publicId = :scrapingId")
     long countByScraping(@Param("scrapingId") UUID scrapingId);
+
+    Optional<ProfilScraper> findByPublicId(UUID publicId);
+
+    void deleteByPublicId(UUID publicId);
+
+    // Per-user access helpers via parent scraping.owner
+    java.util.List<ProfilScraper> findByScraping_Utilisateur_PublicId(UUID utilisateurPublicId);
+
+    Optional<ProfilScraper> findByIdAndScraping_Utilisateur_PublicId(Long id, UUID utilisateurPublicId);
+
+    Optional<ProfilScraper> findByPublicIdAndScraping_Utilisateur_PublicId(UUID publicId, UUID utilisateurPublicId);
 }

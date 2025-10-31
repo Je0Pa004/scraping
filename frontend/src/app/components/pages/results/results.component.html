@@ -1,0 +1,260 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-black text-gray-900 mb-2">📊 Résultats</h1>
+    <p class="text-gray-600">Visualisez et gérez les profils collectés</p>
+  </div>
+
+  <!-- Message Modal -->
+  <div *ngIf="isMessageOpen" class="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Contacter le candidat</h3>
+        <button class="px-3 py-1.5 border-2 border-gray-300 rounded-lg text-sm" (click)="closeMessage()">Fermer</button>
+      </div>
+      <div class="space-y-4">
+        <div>
+          <label class="text-sm text-gray-700 font-medium">Sujet</label>
+          <input class="w-full mt-1 px-3 py-2 border rounded-lg" [(ngModel)]="messageSubject" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-700 font-medium">Message</label>
+          <textarea class="w-full mt-1 px-3 py-2 border rounded-lg min-h-40" [(ngModel)]="messageBody"></textarea>
+          <div class="mt-2">
+            <button class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm hover:bg-gray-50" (click)="generateAI()">🧠 Générer avec IA</button>
+          </div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-700 font-medium">Programmer l'envoi (optionnel)</label>
+          <input type="datetime-local" class="w-full mt-1 px-3 py-2 border rounded-lg" [(ngModel)]="messageSchedule" />
+        </div>
+      </div>
+      <div class="mt-5 flex items-center justify-end gap-2">
+        <button class="px-4 py-2 rounded-lg border border-gray-300" (click)="closeMessage()">Annuler</button>
+        <button class="px-4 py-2 rounded-lg border border-amber-600 text-amber-700" (click)="scheduleSend()">🕓 Programmer</button>
+        <button class="px-4 py-2 rounded-lg bg-primary-600 text-white" (click)="sendNow()">🚀 Envoyer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="bg-white rounded-2xl shadow-soft p-10 text-center text-gray-600">
+    <i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Chargement des résultats...
+  </div>
+
+  <!-- Toolbar -->
+  <div class="flex items-center justify-between mb-6" *ngIf="!loading">
+    <div class="flex items-center gap-2">
+      <button class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm" [class.bg-gray-900]="viewMode==='grid'" [class.text-white]="viewMode==='grid'" (click)="viewMode='grid'">
+        <i class="fa-solid fa-grip"></i> Grille
+      </button>
+      <button class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm" [class.bg-gray-900]="viewMode==='table'" [class.text-white]="viewMode==='table'" (click)="viewMode='table'">
+        <i class="fa-solid fa-table"></i> Tableau
+      </button>
+      <button class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm" (click)="showFilters = !showFilters">
+        <i class="fa-solid fa-filter"></i> Filtres
+      </button>
+    </div>
+    <div class="text-sm text-gray-600">
+      {{ totalProfilesCount }} profils
+    </div>
+  </div>
+
+  <!-- Filters Panel -->
+  <div *ngIf="showFilters" class="bg-white rounded-2xl shadow-soft p-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="text-sm text-gray-700 font-medium">Recherche</label>
+        <input class="w-full mt-1 px-3 py-2 border rounded-lg" [(ngModel)]="filterQuery" (ngModelChange)="currentPage=0" />
+      </div>
+      <div>
+        <label class="text-sm text-gray-700 font-medium">Statut</label>
+        <select class="w-full mt-1 px-3 py-2 border rounded-lg" [(ngModel)]="filterStatus" (ngModelChange)="currentPage=0">
+          <option value="">Tous</option>
+          <option *ngFor="let s of availableStatuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-sm text-gray-700 font-medium">Source contient</label>
+        <input class="w-full mt-1 px-3 py-2 border rounded-lg" [(ngModel)]="filterSource" (ngModelChange)="currentPage=0" placeholder="ex: linkedin.com" />
+      </div>
+      <div class="flex items-end gap-3">
+        <label class="inline-flex items-center gap-2 mr-4">
+          <input type="checkbox" [(ngModel)]="filterHasEmail" (ngModelChange)="currentPage=0" />
+          <span class="text-sm">Avec email</span>
+        </label>
+        <label class="inline-flex items-center gap-2">
+          <input type="checkbox" [(ngModel)]="filterHasPhone" (ngModelChange)="currentPage=0" />
+          <span class="text-sm">Avec téléphone</span>
+        </label>
+      </div>
+    </div>
+    <div class="mt-3">
+      <button class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm" (click)="clearFilters()">Réinitialiser</button>
+    </div>
+  </div>
+
+  <!-- Stats & Results -->
+  <ng-container *ngIf="!loading">
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white rounded-xl shadow-soft p-4">
+        <div class="text-2xl font-black text-gray-900">{{ totalProfilesCount }}</div>
+        <div class="text-sm text-gray-600">Profils trouvés</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-soft p-4">
+        <div class="text-2xl font-black text-green-600">-</div>
+        <div class="text-sm text-gray-600">Pertinents</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-soft p-4">
+        <div class="text-2xl font-black text-amber-600">-</div>
+        <div class="text-sm text-gray-600">Emails envoyés</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-soft p-4">
+        <div class="text-2xl font-black text-primary-600">-</div>
+        <div class="text-sm text-gray-600">CV reçus</div>
+      </div>
+    </div>
+
+    <!-- RESULTS BODY -->
+    <ng-container *ngIf="totalProfilesCount > 0; else emptyState">
+      <!-- GRID VIEW -->
+      <div *ngIf="viewMode==='grid'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let p of pagedRawProfiles" class="bg-white rounded-2xl shadow-soft p-6 flex flex-col">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 text-white flex items-center justify-center text-lg font-bold select-none">
+              {{ (p.nom || '?').slice(0,1).toUpperCase() }}
+            </div>
+            <div>
+              <div class="font-bold text-gray-900 leading-relaxed">{{ p.nom || 'Candidat' }}</div>
+              <div class="text-sm text-gray-600 leading-relaxed">{{ p.description || '—' }}</div>
+              <div class="text-xs text-primary-600 mt-1"><a *ngIf="p.urlSource" [href]="p.urlSource" target="_blank">Voir sur la source</a></div>
+            </div>
+          </div>
+          <div class="flex-1"></div>
+          <div class="mt-4 flex items-center gap-3">
+            <button class="btn-icon btn-icon--save" (click)="onSaveProfile(p)" title="Enregistrer">
+              <i class="fa-solid fa-folder-open"></i>
+            </button>
+            <button class="btn-icon btn-icon--message" (click)="openMessage(p)" title="Contacter">
+              <i class="fa-solid fa-envelope"></i>
+            </button>
+            <button class="btn-icon btn-icon--view" (click)="onDetailProfile(p)" title="Voir">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination for grid -->
+      <div class="mt-12 flex items-center justify-center gap-4" *ngIf="totalProfilesCount > pageSize">
+        <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="prevPage()" [disabled]="currentPage===0">«</button>
+        <ng-container *ngFor="let i of pages">
+          <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100" [class.bg-gray-900]="i===currentPage" [class.text-white]="i===currentPage" (click)="goToPage(i)">{{ i+1 }}</button>
+        </ng-container>
+        <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="nextPage()" [disabled]="currentPage===totalPages-1">»</button>
+      </div>
+    </ng-container>
+
+    <!-- TABLE VIEW -->
+    <div class="bg-white rounded-2xl shadow-soft p-6 mb-6" *ngIf="viewMode==='table' && totalProfilesCount > 0">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+        <h2 class="text-xl font-bold text-gray-900">Tableau des profils</h2>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors duration-200">
+            <i class="fa-solid fa-filter mr-2"></i>Filtrer
+          </button>
+          <button (click)="onExportResults()" class="px-4 py-2 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors duration-200">
+            <i class="fa-solid fa-download mr-2"></i>Exporter CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Nom</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Description</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Email</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Téléphone</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Source</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Statut</th>
+              <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pagedRawProfiles" class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200">
+              <td class="py-4 px-4 text-sm font-semibold text-gray-900">{{ p.nom }}</td>
+              <td class="py-4 px-4 text-sm text-gray-900">{{ p.description }}</td>
+              <td class="py-4 px-4 text-sm text-gray-600">
+                <a *ngIf="p.email" [href]="'mailto:' + p.email" class="text-primary-600">{{ p.email }}</a>
+                <span *ngIf="!p.email">-</span>
+              </td>
+              <td class="py-4 px-4 text-sm text-gray-600">
+                <a *ngIf="p.telephone" [href]="'tel:' + p.telephone" class="text-primary-600">{{ p.telephone }}</a>
+                <span *ngIf="!p.telephone">-</span>
+              </td>
+              <td class="py-4 px-4 text-sm text-primary-600">
+                <a *ngIf="p.urlSource" [href]="p.urlSource" target="_blank" rel="noreferrer">Ouvrir</a>
+                <span *ngIf="!p.urlSource">-</span>
+              </td>
+              <td class="py-4 px-4 text-sm text-gray-600">{{ p.statut || '-' }}</td>
+              <td class="py-4 px-4">
+                <div class="flex gap-2">
+                  <button class="btn-icon btn-icon--delete" (click)="onDeleteProfile(p)" title="Supprimer">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                  <button class="btn-icon btn-icon--download" (click)="onDownloadProfile(p)" title="Télécharger">
+                    <i class="fa-solid fa-download"></i>
+                  </button>
+                  <button class="btn-icon btn-icon--view" (click)="onDetailProfile(p)" title="Détail">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="text-sm text-gray-600">
+          Showing {{ pageStartIndex }} to {{ pageEndIndex }} of {{ totalProfilesCount }} entries
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="firstPage()" [disabled]="currentPage === 0" [attr.aria-label]="'First page'">««</button>
+          <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="prevPage()" [disabled]="currentPage === 0" [attr.aria-label]="'Previous page'">«</button>
+          <ng-container *ngFor="let i of pages">
+            <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100" [class.bg-gray-900]="i === currentPage" [class.text-white]="i === currentPage" [class.border-gray-900]="i === currentPage" (click)="goToPage(i)" [attr.aria-label]="'Page ' + (i + 1)">{{ i + 1 }}</button>
+          </ng-container>
+          <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="nextPage()" [disabled]="currentPage === totalPages - 1" [attr.aria-label]="'Next page'">»</button>
+          <button class="w-9 h-9 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-100 disabled:opacity-50" (click)="lastPage()" [disabled]="currentPage === totalPages - 1" [attr.aria-label]="'Last page'">»»</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="bg-white rounded-2xl shadow-soft p-10 text-center text-gray-600">
+        Aucun profil trouvé pour cette recherche.
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- Detail Modal -->
+  <div *ngIf="selectedProfile" class="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Détail du profil</h3>
+        <button class="px-3 py-1.5 border-2 border-gray-300 rounded-lg text-sm" (click)="onCloseDetail()">Fermer</button>
+      </div>
+      <div class="space-y-2 text-sm">
+        <div><span class="font-semibold text-gray-700">Nom:</span> {{ selectedProfile?.nom }}</div>
+        <div><span class="font-semibold text-gray-700">Description:</span> {{ selectedProfile?.description }}</div>
+        <div><span class="font-semibold text-gray-700">Email:</span> {{ selectedProfile?.email }}</div>
+        <div><span class="font-semibold text-gray-700">Téléphone:</span> {{ selectedProfile?.telephone }}</div>
+        <div><span class="font-semibold text-gray-700">Source:</span> <a *ngIf="selectedProfile?.urlSource" [href]="selectedProfile?.urlSource" target="_blank" class="text-primary-600">Ouvrir</a></div>
+        <div><span class="font-semibold text-gray-700">Statut:</span> {{ selectedProfile?.statut }}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+<div class="results-container">
+    <!-- Search Summary Header -->
+    <div class="results-header" *ngIf="searchDetails">
+      <div class="search-summary">
+        <div class="summary-content">
+          <h1 class="results-title">Search Results</h1>
+          <p class="search-criteria">
+            <i class="fas fa-search me-2"></i>
+            {{ getSearchCriteriaDisplay() }}
+          </p>
+          <div class="search-meta">
+            <span class="meta-item">
+              <i class="fas fa-calendar me-1"></i>
+              {{ searchDetails.createdAt | date:'medium' }}
+            </span>
+            <span class="meta-item">
+              <i class="fas fa-users me-1"></i>
+              {{ totalProfiles }} profiles found
+            </span>
+            <span class="meta-item" *ngIf="searchDetails.status">
+              <i class="fas fa-circle me-1" [ngClass]="getStatusClass(searchDetails.status)"></i>
+              {{ searchDetails.status | titlecase }}
+            </span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button
+            class="btn btn-outline-primary"
+            (click)="onNewSearch()">
+            <i class="fas fa-search me-2"></i>
+            New Search
+          </button>
+          <button
+            class="btn btn-outline-secondary"
+            (click)="onExportResults()">
+            <i class="fas fa-download me-2"></i>
+            Export
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="loading-content">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <h3>Loading Results...</h3>
+        <p>Please wait while we fetch your search results</p>
+      </div>
+    </div>
+  
+    <!-- Results Table -->
+    <div class="results-grid" *ngIf="!isLoading && rawProfiles.length > 0">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Source</th>
+              <th>Statut</th>
+              <th style="width: 220px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pagedRawProfiles">
+              <td>{{ p.nom }}</td>
+              <td>{{ p.description }}</td>
+              <td>
+                <a *ngIf="p.email" [href]="'mailto:' + p.email">{{ p.email }}</a>
+                <span *ngIf="!p.email">-</span>
+              </td>
+              <td>
+                <a *ngIf="p.telephone" [href]="'tel:' + p.telephone">{{ p.telephone }}</a>
+                <span *ngIf="!p.telephone">-</span>
+              </td>
+              <td>
+                <a *ngIf="p.urlSource" [href]="p.urlSource" target="_blank" rel="noopener">Lien</a>
+                <span *ngIf="!p.urlSource">-</span>
+              </td>
+              <td>{{ p.statut }}</td>
+              <td>
+                <div class="actions-cell">
+                  <button class="icon-btn btn-edit" title="Modifier" aria-label="Modifier" (click)="onDetailProfile(p)">
+                    <i class="fas fa-pen"></i>
+                  </button>
+                  <button class="icon-btn btn-block" title="Bloquer" aria-label="Bloquer" (click)="onBlockProfile(p)">
+                    <i class="fas fa-ban"></i>
+                  </button>
+                  <button class="icon-btn btn-delete" title="Supprimer" aria-label="Supprimer" (click)="onDeleteProfile(p)">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-pagination">
+        <div class="pagination-info">
+          Showing {{ pageStartIndex }} to {{ pageEndIndex }} of {{ rawProfiles.length }} entries
+        </div>
+        <div class="pagination-controls">
+          <button class="pager-btn" (click)="firstPage()" [disabled]="currentPage === 0" [attr.aria-label]="'First page'">««</button>
+          <button class="pager-btn" (click)="prevPage()" [disabled]="currentPage === 0" [attr.aria-label]="'Previous page'">«</button>
+          <ng-container *ngFor="let i of pages">
+            <button class="pager-btn" [class.active]="i === currentPage" (click)="goToPage(i)" [attr.aria-label]="'Page ' + (i + 1)">{{ i + 1 }}</button>
+          </ng-container>
+          <button class="pager-btn" (click)="nextPage()" [disabled]="currentPage === totalPages - 1" [attr.aria-label]="'Next page'">»</button>
+          <button class="pager-btn" (click)="lastPage()" [disabled]="currentPage === totalPages - 1" [attr.aria-label]="'Last page'">»»</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Load More Button -->
+    <div class="load-more-section" *ngIf="hasMoreProfiles && !isLoading">
+      <button
+        class="btn btn-outline-primary load-more-btn"
+        (click)="onLoadMore()">
+        <i class="fas fa-plus me-2"></i>
+        Load More Profiles
+      </button>
+    </div>
+  
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && rawProfiles.length === 0">
+      <div class="empty-content">
+        <div class="empty-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3 class="empty-title">No profiles found</h3>
+        <p class="empty-description">
+          We couldn't find any profiles matching your search criteria.
+          Try adjusting your filters or search for a different location.
+        </p>
+        <button
+          class="btn btn-primary"
+          (click)="onNewSearch()">
+          <i class="fas fa-search me-2"></i>
+          Try New Search
+        </button>
+      </div>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="detail-modal" *ngIf="selectedProfile">
+      <div class="detail-content">
+        <div class="detail-header">
+          <h3>Détail Profil</h3>
+          <button class="btn btn-sm btn-outline-secondary" (click)="onCloseDetail()">Fermer</button>
+        </div>
+        <div class="detail-body">
+          <p><strong>Nom:</strong> {{ selectedProfile?.nom }}</p>
+          <p><strong>Description:</strong> {{ selectedProfile?.description }}</p>
+          <p><strong>Email:</strong> {{ selectedProfile?.email }}</p>
+          <p><strong>Téléphone:</strong> {{ selectedProfile?.telephone }}</p>
+          <p><strong>Source:</strong> <a *ngIf="selectedProfile?.urlSource" [href]="selectedProfile?.urlSource" target="_blank" rel="noopener">Lien</a></p>
+          <p><strong>Statut:</strong> {{ selectedProfile?.statut }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

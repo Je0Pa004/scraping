@@ -32,7 +32,8 @@ public class AbonnementMapper {
                 .dateDebut(req.getDateDebut())
                 .dateFin(req.getDateFin())
                 .statut(req.getStatut())
-                .nombreScraping(req.getNombreScraping())
+                .quotaTotal(type.getNombreScrapingMax())
+                .quotaUtilise(req.getQuotaUtilise() != null ? req.getQuotaUtilise() : 0)
                 .prix(BigDecimal.valueOf(type.getCout()))
                 .typeAbonnement(type)
                 .utilisateur(user)
@@ -43,17 +44,13 @@ public class AbonnementMapper {
         if (req.getDateDebut() != null) entity.setDateDebut(req.getDateDebut());
         if (req.getDateFin() != null) entity.setDateFin(req.getDateFin());
         if (req.getStatut() != null) entity.setStatut(req.getStatut());
-        if (req.getNombreScraping() != null) entity.setNombreScraping(req.getNombreScraping());
+        if (req.getQuotaUtilise() != null) entity.setQuotaUtilise(req.getQuotaUtilise());
         if (req.getTypeAbonnementPublicId() != null) {
             var type = typeAbonnementRepository.findByPublicId(UUID.fromString(String.valueOf(req.getTypeAbonnementPublicId())))
                     .orElseThrow(() -> new IllegalArgumentException("TypeAbonnement introuvable: " + req.getTypeAbonnementPublicId()));
             entity.setTypeAbonnement(type);
             entity.setPrix(BigDecimal.valueOf(type.getCout()));
-        }
-        if (req.getUtilisateurPublicId() != null) {
-            var user = utilisateurRepository.findByPublicId(UUID.fromString(String.valueOf(req.getUtilisateurPublicId())))
-                    .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable: " + req.getUtilisateurPublicId()));
-            entity.setUtilisateur(user);
+            entity.setQuotaTotal(type.getNombreScrapingMax());
         }
     }
 
@@ -64,7 +61,7 @@ public class AbonnementMapper {
                 .dateDebut(e.getDateDebut())
                 .dateFin(e.getDateFin())
                 .statut(e.getStatut())
-                .nombreScraping(e.getNombreScraping())
+                .quotaUtilise(e.getQuotaUtilise())
                 .prix(e.getPrix())
                 .utilisateurPublicId(e.getUtilisateur().getPublicId())
                 .typeAbonnement(type)

@@ -7,6 +7,8 @@ package com.projet.scraping.security;
  */
 import com.projet.scraping.security.dto.UserDTO;
 import com.projet.scraping.security.model.User;
+import com.projet.scraping.entities.enums.UserStatus;
+import com.projet.scraping.entities.enums.AccountType;
 import com.projet.scraping.security.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,8 +60,12 @@ public class UserService implements UserDetailsService {
         user.setNom(dto.getNom());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getMotDePasse()));
-        user.setTypeCompte(User.AccountType.valueOf(dto.getTypeCompte()));
-        user.setStatut(User.UserStatus.ACTIVE);
+        try {
+            user.setTypeCompte(AccountType.valueOf(dto.getTypeCompte()));
+        } catch (Exception e) {
+            user.setTypeCompte(AccountType.RECRUTEUR);
+        }
+        user.setStatut(UserStatus.ACTIVE);
         user.setEnable(true);
         user.setPublicId(UUID.randomUUID());
         user.setRoles("USER");
@@ -74,11 +80,11 @@ public class UserService implements UserDetailsService {
      * @return l'utilisateur mis à jour
      * @throws IllegalArgumentException si l'utilisateur n'existe pas
      */
-    public User updateUserStatus(Long id, User.UserStatus status) {
+    public User updateUserStatus(Long id, UserStatus status) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
         user.setStatut(status);
-        user.setEnable(status == User.UserStatus.ACTIVE);
+        user.setEnable(status == UserStatus.ACTIVE);
         return userRepository.save(user);
     }
 

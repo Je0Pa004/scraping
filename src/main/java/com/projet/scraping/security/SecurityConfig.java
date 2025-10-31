@@ -20,6 +20,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.http.HttpMethod;
+
+import java.util.List;
 
 /**
  * Configuration class for Spring Security.
@@ -52,6 +58,8 @@ public class SecurityConfig {
         http
                 // Désactive CSRF
                 .csrf(AbstractHttpConfigurer::disable)
+                // Active CORS avec configuration
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 // Gsstion des exceptions liées à l'authentification
                 .exceptionHandling(exception -> {
                     exception.authenticationEntryPoint((request, response, authException) -> {
@@ -63,10 +71,12 @@ public class SecurityConfig {
                 // Autorisations pour les requêtes HTTP
                 .authorizeHttpRequests(auth -> auth
                         // Ces chemins sont accessibles à tous
-                        .requestMatchers("/","/api/v1/login", "/api/v1/register", "/error", "/csrf", "/resources/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/import/**", "/api/v1/etats/**","/api/entresortie/pointage/**", "/datasource/**")
+                        .requestMatchers("/","/api/v1/login", "/api/v1/register", "/api/auth/login", "/api/auth/register", "/api/v1/debug/**", "/error", "/csrf", "/resources/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/import/**", "/api/v1/etats/**","/api/entresortie/pointage/**", "/datasource/**")
                         .permitAll()
-                        // Routes réservées aux admins
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        // Préflight CORS
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // Routes réservées aux admins - CORRECTION: /api/v1/admin au lieu de /api/admin
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         // User ou Admin
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                         // Authentification necessaire pour toutes les autres routes
@@ -97,6 +107,18 @@ public class SecurityConfig {
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://127.0.0.1:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     /**

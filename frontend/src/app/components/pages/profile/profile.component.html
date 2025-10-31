@@ -1,0 +1,198 @@
+<div class="p-6 max-w-5xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-black text-gray-900 mb-2">👤 Profil</h1>
+    <p class="text-gray-600">Gérez vos informations personnelles et préférences</p>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+    <!-- Sidebar -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-2xl shadow-soft p-6">
+        <div class="text-center mb-6">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
+            {{ getInitials() }}
+          </div>
+          <h3 class="text-xl font-bold text-gray-900">{{ fullName || companyName || 'Utilisateur' }}</h3>
+          <p class="text-sm text-gray-600">{{ email }}</p>
+        </div>
+        
+        <div class="space-y-2">
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+            <i class="fa-solid fa-calendar text-gray-600"></i>
+            <div>
+              <div class="text-xs text-gray-500">Membre depuis</div>
+              <div class="text-sm font-semibold text-gray-900">{{ memberSince || 'N/A' }}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+            <i class="fa-solid fa-crown text-amber-500"></i>
+            <div>
+              <div class="text-xs text-gray-500">Plan actuel</div>
+              <div class="text-sm font-semibold text-gray-900">{{ currentPlan }}</div>
+              <div class="text-xs text-gray-500" *ngIf="hasSubscriptionWithDetails()">
+                Jusqu'au {{ getFormattedExpiryDate() }}
+              </div>
+              <div class="text-xs text-gray-500" *ngIf="userSubscription && !hasValidSubscription()">
+                Détails non disponibles
+              </div>
+              <div class="text-xs text-gray-500" *ngIf="!userSubscription">
+                Pas d'abonnement actif
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl" *ngIf="hasValidSubscription()">
+            <i class="fa-solid fa-search text-blue-500"></i>
+            <div>
+              <div class="text-xs text-gray-500">Recherches restantes</div>
+              <div class="text-sm font-semibold text-gray-900">
+                {{ getRemainingSearches() }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button (click)="logout()" class="w-full mt-6 py-3 border-2 border-red-300 text-red-600 font-semibold rounded-xl hover:bg-red-50 transition-colors duration-200">
+          <i class="fa-solid fa-right-from-bracket mr-2"></i>
+          Déconnexion
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Informations utilisateur -->
+      <div class="bg-white rounded-2xl shadow-soft p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">Informations utilisateur (admin)</h2>
+        
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Nom complet *</label>
+              <input [(ngModel)]="fullName" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" 
+                     placeholder="Jean Dupont" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Téléphone</label>
+              <input type="tel" [(ngModel)]="phone" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" 
+                     placeholder="+33 6 12 34 56 78" />
+            </div>
+          </div>
+
+          <button (click)="saveUserInfo()" class="w-full py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+            <i class="fa-solid fa-floppy-disk mr-2"></i>
+            Enregistrer les modifications
+          </button>
+      </div>
+
+      <!-- Informations d'abonnement -->
+      <div class="bg-white rounded-2xl shadow-soft p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">💳 Informations d'abonnement</h2>
+
+        <!-- Section avec abonnement -->
+        <div *ngIf="hasValidSubscription()">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Plan actuel</label>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+                    <i class="fa-solid fa-crown text-white"></i>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-gray-900">{{ userSubscription?.typeAbonnement?.nom }}</div>
+                    <div class="text-sm text-gray-500">{{ userSubscription?.typeAbonnement?.description }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Statut</label>
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span class="text-sm text-gray-900">Actif</span>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Date d'expiration</label>
+                <div class="text-gray-900" *ngIf="getFormattedExpiryDate(); else noDate">
+                  {{ getFormattedExpiryDate() }}
+                </div>
+                <ng-template #noDate>
+                  <div class="text-gray-500">Non définie</div>
+                </ng-template>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Recherches</label>
+                <div class="text-gray-900" *ngIf="hasUsageInfo(); else noUsage">
+                  {{ getUsedSearches() }} utilisées /
+                  {{ getMaxSearches() }} disponibles
+                </div>
+                <ng-template #noUsage>
+                  <div class="text-gray-500">Informations non disponibles</div>
+                </ng-template>
+                <div class="w-full bg-gray-200 rounded-full h-2 mt-1" *ngIf="hasUsageInfo()">
+                  <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
+                       [style.width.%]="getUsagePercentage()">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-gray-100">
+            <button routerLink="/app/subscriptions" class="w-full py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+              <i class="fa-solid fa-crown mr-2"></i>
+              Gérer l'abonnement
+            </button>
+          </div>
+        </div>
+
+        <!-- Section sans abonnement ou détails manquants -->
+        <div *ngIf="!hasValidSubscription()">
+          <div class="text-center py-8">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-crown text-white text-xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ userSubscription ? 'Plan sans détails' : 'Plan Gratuit' }}</h3>
+            <p class="text-gray-600 mb-6">{{ userSubscription ? 'Les détails du plan ne sont pas disponibles.' : 'Vous utilisez actuellement le plan gratuit avec des fonctionnalités limitées.' }}</p>
+            <button routerLink="/app/subscriptions" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+              <i class="fa-solid fa-rocket mr-2"></i>
+              {{ userSubscription ? 'Consulter l\'abonnement' : 'Passer à Premium' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-soft p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">🔒 Changer le mot de passe</h2>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Mot de passe actuel</label>
+            <input type="password" [(ngModel)]="currentPassword" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" 
+                   placeholder="••••••••" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nouveau mot de passe</label>
+            <input type="password" [(ngModel)]="newPassword" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" 
+                   placeholder="••••••••" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Confirmer le mot de passe</label>
+            <input type="password" [(ngModel)]="confirmPassword" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-primary-600 outline-none transition-colors duration-200" 
+                   placeholder="••••••••" />
+          </div>
+
+          <button (click)="changePassword()" class="w-full py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-xl hover:shadow-lg transition-all duration-200">
+            <i class="fa-solid fa-lock mr-2"></i>
+            Mettre à jour le mot de passe
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

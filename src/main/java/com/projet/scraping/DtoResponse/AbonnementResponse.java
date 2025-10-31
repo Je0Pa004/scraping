@@ -16,7 +16,7 @@ public class AbonnementResponse {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private Boolean statut;
-    private Integer nombreScraping;
+    private Integer quotaUtilise;
     private BigDecimal prix;
     private UUID utilisateurPublicId;
     private TypeAbonnementResponse typeAbonnement;

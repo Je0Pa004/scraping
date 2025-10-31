@@ -1,0 +1,18 @@
+.auth-bg{background:linear-gradient(135deg,#eef2ff, #faf5ff, #ffe4f1)}
+.text-gradient{background:linear-gradient(90deg,#4f46e5,#7c3aed,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bg-indigo-soft{background:#e0e7ff}
+.text-indigo{color:#4f46e5}
+.fw-black{font-weight:900}
+.shadow-xxl{box-shadow:0 20px 50px rgba(0,0,0,.08)}
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.bg-gradient-indigo{background:linear-gradient(135deg,#6366f1,#a855f7)}
+
+.input-with-icon{position:relative}
+.input-with-icon .input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#9ca3af}
+.input-with-icon .toggle-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:#9ca3af}
+
+.btn-gradient{background:linear-gradient(90deg,#4f46e5,#7c3aed,#ec4899);color:#fff;border:0}
+.btn-gradient:hover{filter:brightness(.95)}
+
+.loader-custom{display:inline-block;width:1rem;height:1rem;border:2px solid #f3f3f3;border-top:2px solid #4f46e5;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}

@@ -1,0 +1,40 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h5 class="sidebar-title">
+      <i class="fas fa-search me-2"></i>
+      ScrapingPro
+    </h5>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav flex-column">
+      <li class="nav-item" *ngFor="let item of menuItems">
+        <a
+          class="nav-link"
+          [class.active]="isActive(item.route)"
+          [style.opacity]="isDisabled(item) ? 0.5 : 1"
+          [style.pointer-events]="isDisabled(item) ? 'none' : 'auto'"
+          href="#"
+          (click)="onClick(item, $event)"
+          *ngIf="hasRole(item.roles)"
+          [attr.aria-disabled]="isDisabled(item) ? true : null"
+          [attr.title]="isDisabled(item) ? 'Disponible après souscription' : null">
+          <i [class]="item.icon" class="nav-icon"></i>
+          <span class="nav-text">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer" *ngIf="currentUser">
+    <div class="user-info">
+      <div class="user-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-details">
+        <div class="user-name">{{ currentUser.nom }}</div>
+        <div class="user-role">{{ currentUser.typeCompte | capitalize }}</div>
+      </div>
+    </div>
+  </div>
+</div>

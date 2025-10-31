@@ -11,9 +11,14 @@ import lombok.*;
 @Setter
 @Builder
 public class TypeAbonnementResponse {
+    private Long id;
     private UUID publicId;
     private String nom;
+    private String description;
     private Double cout;
+    private Integer duree;
     private Integer nombreScrapingMax;
+    private Integer nombreProfilsMax;
     private SubscriptionType type;
+    private Boolean estActif;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface PaiementRepository extends JpaRepository<Paiement, Long> {
 
@@ -21,4 +22,13 @@ public interface PaiementRepository extends JpaRepository<Paiement, Long> {
         List<Paiement> list = findByUtilisateurAndStatusOrderByDateDesc(utilisateurId, PaymentStatus.SUCCESS);
         return list.isEmpty() ? Optional.empty() : Optional.of(list.getFirst());
     }
+
+    Optional<Paiement> findByPublicId(UUID publicId);
+
+    List<Paiement> findAllByOrderByDatePaiementDesc();
+
+    // Per-user helpers
+    java.util.List<Paiement> findByUtilisateur_PublicId(UUID utilisateurPublicId);
+
+    Optional<Paiement> findByIdAndUtilisateur_PublicId(Long id, UUID utilisateurPublicId);
 }

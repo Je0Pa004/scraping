@@ -1,0 +1,11 @@
+/* minimal styles for placeholder dashboard */
+
+.dashboard-title{font-weight:800;font-size:2rem}
+.card{border:1px solid #eef0f3;border-radius:16px}
+.kpi-card .display-6{line-height:1}
+.kpi-card .card-body{padding:1.25rem 1.25rem 1rem}
+.gradient-card{background:linear-gradient(135deg,#eef2ff,#f5f3ff,#fdf4ff)}
+.list-group .list-group-item{border:1px solid #eef0f3}
+.list-group .list-group-item:first-child{border-top-left-radius:12px;border-top-right-radius:12px}
+.list-group .list-group-item:last-child{border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+.list-group .list-group-item:hover{background:#f8fafc}

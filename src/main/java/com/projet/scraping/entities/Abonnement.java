@@ -31,8 +31,11 @@ public class Abonnement extends BaseEntity {
     @Column(name = "statut", nullable = false)
     private Boolean statut; // ex: true pour ACTIF, false pour INACTIF
 
-    @Column(name = "nombre_scraping", nullable = false)
-    private Integer nombreScraping;
+    @Column(name = "quota_total", nullable = false)
+    private Integer quotaTotal; // Quota total défini par le type d'abonnement
+
+    @Column(name = "quota_utilise", nullable = false)
+    private Integer quotaUtilise; // Quota utilisé (incrémenté lors des scrapings et envois de messages)
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")

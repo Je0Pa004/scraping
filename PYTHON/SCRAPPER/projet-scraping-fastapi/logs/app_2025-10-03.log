@@ -1,0 +1,97 @@
+2025-10-03 16:07:16 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-03 16:08:07 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-03 16:10:02 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 16:10:02 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 16:10:03 | ERROR    | __main__:main:43 - Dépendance manquante pour LinkedIn: No module named 'bs4'
+2025-10-03 16:10:59 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 16:10:59 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 16:10:59 | ERROR    | scrapers.linkedin_scraper:_init_browser:42 - Playwright n'est pas installé. Installez-le avec: pip install playwright && playwright install
+2025-10-03 16:10:59 | ERROR    | scrapers.linkedin_scraper:search_profiles:155 - Erreur lors de la recherche de profils: No module named 'playwright'
+2025-10-03 16:10:59 | INFO     | scrapers.linkedin_scraper:_close_browser:57 - Navigateur fermé
+2025-10-03 16:10:59 | ERROR    | __main__:main:142 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 148, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 48, in main
+    results = scraper.search_profiles(
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 116, in search_profiles
+    self._init_browser()
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\linkedin_scraper.py", line 40, in _init_browser
+    from playwright.sync_api import sync_playwright  # lazy import
+
+ModuleNotFoundError: No module named 'playwright'
+2025-10-03 16:22:26 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-03 16:27:11 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-03 16:30:15 | ERROR    | __main__:main:31 - Paramètres JSON invalides fournis à --params
+2025-10-03 16:31:39 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 16:31:39 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 16:31:40 | INFO     | scrapers.linkedin_scraper:search_profiles:73 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Data Engineer" Paris Informatique
+2025-10-03 16:37:18 | INFO     | __main__:main:35 - Action demandée: scrape_pagesjaunes
+2025-10-03 16:37:18 | INFO     | __main__:main:36 - Paramètres: {'profession': 'plombier', 'location': 'Lyon', 'max_results': 5}
+2025-10-03 16:37:19 | ERROR    | __main__:main:78 - Dépendance manquante pour Pages Jaunes: No module named 'bs4'
+2025-10-03 16:37:36 | INFO     | __main__:main:35 - Action demandée: scrape_google
+2025-10-03 16:37:36 | INFO     | __main__:main:36 - Paramètres: {'keywords': 'site:linkedin.com/in Data Engineer Paris Informatique', 'location': 'Paris'}
+2025-10-03 16:37:37 | ERROR    | __main__:main:63 - Dépendance manquante pour Google: No module named 'bs4'
+2025-10-03 16:39:20 | INFO     | __main__:main:35 - Action demandée: scrape_google
+2025-10-03 16:39:20 | INFO     | __main__:main:36 - Paramètres: {'keywords': 'site:linkedin.com/in Data Engineer Paris Informatique', 'location': 'Paris'}
+2025-10-03 16:39:22 | ERROR    | __main__:main:142 - Erreur lors de l'exécution de l'action
+Traceback (most recent call last):
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 148, in <module>
+    sys.exit(main())
+
+> File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\main.py", line 61, in main
+    from scrapers.google_scraper import GoogleScraper
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\google_scraper.py", line 14, in <module>
+    class GoogleScraper:
+
+  File "C:\Users\moise\Downloads\SCRAPPER\projet-scraping-fastapi\python\scrapers\google_scraper.py", line 168, in GoogleScraper
+    def _extract_emails(self, soup: BeautifulSoup) -> List[str]:
+
+NameError: name 'BeautifulSoup' is not defined
+2025-10-03 16:39:28 | INFO     | __main__:main:35 - Action demandée: scrape_pagesjaunes
+2025-10-03 16:39:28 | INFO     | __main__:main:36 - Paramètres: {'profession': 'plombier', 'location': 'Lyon', 'max_results': 5}
+2025-10-03 16:39:29 | ERROR    | __main__:main:78 - Dépendance manquante pour Pages Jaunes: No module named 'bs4'
+2025-10-03 16:42:05 | INFO     | __main__:main:35 - Action demandée: scrape_google
+2025-10-03 16:42:05 | INFO     | __main__:main:36 - Paramètres: {'keywords': 'site:linkedin.com/in Data Engineer Paris Informatique', 'location': 'Paris'}
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:08 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:19 | INFO     | __main__:main:35 - Action demandée: scrape_pagesjaunes
+2025-10-03 16:42:19 | INFO     | __main__:main:36 - Paramètres: {'profession': 'plombier', 'location': 'Lyon', 'max_results': 5}
+2025-10-03 16:42:19 | INFO     | scrapers.pagesjaunes_scraper:search_businesses:41 - Recherche Pages Jaunes via SerpAPI: site:pagesjaunes.fr plombier Lyon
+2025-10-03 16:42:37 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 16:42:37 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 16:42:37 | INFO     | scrapers.linkedin_scraper:search_profiles:73 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Data Engineer" Paris Informatique
+2025-10-03 16:42:54 | INFO     | __main__:main:35 - Action demandée: scrape_google
+2025-10-03 16:42:54 | INFO     | __main__:main:36 - Paramètres: {'keywords': 'site:linkedin.com/in Data Engineer Paris Informatique', 'location': 'Paris'}
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:42:55 | ERROR    | scrapers.google_scraper:scrape_page:151 - beautifulsoup4 manquant pour scrape_page: No module named 'bs4'
+2025-10-03 16:45:10 | INFO     | __main__:main:35 - Action demandée: scrape_google
+2025-10-03 16:45:10 | INFO     | __main__:main:36 - Paramètres: {'keywords': 'site:linkedin.com/in Data Engineer Paris Informatique', 'location': 'Paris'}
+2025-10-03 18:06:39 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 18:06:39 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 18:06:40 | INFO     | scrapers.linkedin_scraper:search_profiles:74 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Data Engineer" Paris Informatique
+2025-10-03 18:21:23 | INFO     | __main__:main:35 - Action demandée: scrape_linkedin
+2025-10-03 18:21:23 | INFO     | __main__:main:36 - Paramètres: {'titre': 'Data Engineer', 'localisation': 'Paris', 'secteur': 'Informatique', 'max_results': 3}
+2025-10-03 18:21:24 | INFO     | scrapers.linkedin_scraper:search_profiles:74 - Recherche LinkedIn via SerpAPI: site:linkedin.com/in "Data Engineer" Paris Informatique

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/scrapings")
@@ -49,6 +50,12 @@ public class ScrapingController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         scrapingService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/public/{publicId}")
+    public ResponseEntity<Void> deleteByPublic(@PathVariable UUID publicId) {
+        scrapingService.deleteByPublicId(publicId);
         return ResponseEntity.noContent().build();
     }
 }

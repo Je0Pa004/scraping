@@ -1,0 +1,252 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2">👥 Gestion des Utilisateurs</h1>
+      <p class="text-gray-600 dark:text-gray-400">Administrer les entreprises et leurs accès</p>
+    </div>
+    <div class="flex gap-3">
+      <button (click)="openCreateModal()" class="px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-200">
+        <i class="fa-solid fa-plus mr-2"></i>
+        Nouvel Utilisateur
+      </button>
+      <button (click)="exportToCSV()" class="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">
+        <i class="fa-solid fa-download mr-2"></i>
+        Exporter CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Plan</label>
+        <select [(ngModel)]="selectedPlan" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="all">Tous les plans</option>
+          <option value="Free">Free</option>
+          <option value="Basic">Basic</option>
+          <option value="Premium">Premium</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Statut</label>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="all">Tous les statuts</option>
+          <option value="ACTIVE">Actif</option>
+          <option value="SUSPENDED">Suspendu</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Date d'inscription</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Toutes les dates</option>
+          <option value="7days">7 derniers jours</option>
+          <option value="30days">30 derniers jours</option>
+          <option value="90days">90 derniers jours</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Rechercher</label>
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Email, nom..." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Liste des utilisateurs (1,247)</h2>
+        <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <span>Afficher:</span>
+          <select class="px-3 py-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-lg">
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateur</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Plan</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Inscription</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Recherches</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Quota</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Statut</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <!-- Dynamic Users -->
+          <tr *ngFor="let user of paginatedUsers" class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-bold">
+                  {{ user.fullName?.substring(0, 2)?.toUpperCase() || 'U' }}
+                </div>
+                <div>
+                  <div class="font-semibold text-gray-900 dark:text-white">{{ user.fullName }}</div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span [ngClass]="{
+                'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400': user.plan === 'Free',
+                'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400': user.plan === 'Basic',
+                'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400': user.plan === 'Premium'
+              }" class="px-3 py-1 rounded-full text-xs font-bold">{{ user.plan }}</span>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">{{ user.registrationDate | date:'dd/MM/yyyy' }}</td>
+            <td class="py-4 px-6 text-sm font-semibold text-gray-900 dark:text-white">{{ user.searchesUsed }}</td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2 w-20">
+                  <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full" [style.width.%]="user.quotaPercentage"></div>
+                </div>
+                <span class="text-xs font-semibold text-gray-600 dark:text-gray-400">{{ user.quotaPercentage | number:'1.0-0' }}%</span>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <span [ngClass]="{
+                'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400': user.status === 'ACTIVE',
+                'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400': user.status === 'SUSPENDED'
+              }" class="px-3 py-1 rounded-full text-xs font-bold">
+                {{ user.status === 'ACTIVE' ? 'Actif' : 'Suspendu' }}
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <button (click)="viewUserDetails(user.id)" class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                <button (click)="editUser(user)" class="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" title="Modifier">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button *ngIf="user.status === 'ACTIVE'" (click)="suspendUser(user.id)" class="p-2 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-lg transition-colors duration-200" title="Suspendre">
+                  <i class="fa-solid fa-ban"></i>
+                </button>
+                <button *ngIf="user.status === 'SUSPENDED'" (click)="activateUser(user.id)" class="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors duration-200" title="Réactiver">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+                <button (click)="deleteUser(user.id)" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" title="Supprimer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="p-6 border-t border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          Affichage de 1 à 20 sur 1,247 utilisateurs
+        </div>
+        <div class="flex items-center gap-2">
+          <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            Précédent
+          </button>
+          <button class="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold">1</button>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">2</button>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">3</button>
+          <span class="px-2 text-gray-500">...</span>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">63</button>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Create/Edit/View User -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+          {{ modalMode === 'create' ? 'Nouvel Utilisateur' : modalMode === 'edit' ? 'Modifier Utilisateur' : 'Détails Utilisateur' }}
+        </h2>
+        <button (click)="closeModal()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Nom complet</label>
+          <input 
+            type="text" 
+            [(ngModel)]="selectedUser.fullName" 
+            [disabled]="modalMode === 'view'"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none disabled:opacity-50">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email</label>
+          <input 
+            type="email" 
+            [(ngModel)]="selectedUser.email" 
+            [disabled]="modalMode === 'view'"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none disabled:opacity-50">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Plan</label>
+          <select 
+            [(ngModel)]="selectedUser.plan" 
+            [disabled]="modalMode === 'view'"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none disabled:opacity-50">
+            <option value="Free">Free</option>
+            <option value="Basic">Basic</option>
+            <option value="Premium">Premium</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Statut</label>
+          <select 
+            [(ngModel)]="selectedUser.status" 
+            [disabled]="modalMode === 'view'"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none disabled:opacity-50">
+            <option value="ACTIVE">Actif</option>
+            <option value="SUSPENDED">Suspendu</option>
+          </select>
+        </div>
+
+        <div *ngIf="modalMode === 'view'" class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Recherches utilisées</label>
+            <p class="text-gray-900 dark:text-white">{{ selectedUser?.searchesUsed || 0 }}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Quota</label>
+            <p class="text-gray-900 dark:text-white">{{ selectedUser?.quotaPercentage || 0 }}%</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-6">
+        <button 
+          (click)="closeModal()" 
+          class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+          Annuler
+        </button>
+        <button 
+          *ngIf="modalMode !== 'view'"
+          (click)="saveUser()" 
+          class="px-6 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-200">
+          {{ modalMode === 'create' ? 'Créer' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

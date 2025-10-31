@@ -1,0 +1,268 @@
+<div class="search-container">
+  <div class="search-header">
+    <div class="header-content">
+      <h1 class="search-title">Find Profiles</h1>
+      <p class="search-subtitle">
+        Search for professional profiles using advanced filters and criteria
+      </p>
+    </div>
+    <div class="search-stats" *ngIf="currentSubscription">
+      <div class="stat-item">
+        <span class="stat-label">Credits Remaining:</span>
+        <span class="stat-value">{{ getCreditsRemaining() }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Max Results:</span>
+        <span class="stat-value">{{ getMaxResults() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-content">
+    <!-- Quick Search Buttons -->
+    <div class="quick-search-section">
+      <h3 class="section-title">Quick Search</h3>
+      <div class="quick-buttons">
+        <button
+          class="btn btn-outline-primary quick-btn"
+          (click)="onQuickSearch('New York')">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          New York
+        </button>
+        <button
+          class="btn btn-outline-primary quick-btn"
+          (click)="onQuickSearch('San Francisco')">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          San Francisco
+        </button>
+        <button
+          class="btn btn-outline-primary quick-btn"
+          (click)="onQuickSearch('London')">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          London
+        </button>
+        <button
+          class="btn btn-outline-primary quick-btn"
+          (click)="onQuickSearch('Berlin')">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          Berlin
+        </button>
+      </div>
+    </div>
+
+    <div class="search-form-section">
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-form">
+        <!-- Basic Search Fields -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="location" class="form-label">
+              Location <span class="required">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-map-marker-alt"></i>
+              </span>
+              <input
+                type="text"
+                id="location"
+                class="form-control"
+                formControlName="location"
+                placeholder="Enter city, state, or country"
+                [class.is-invalid]="location?.invalid && location?.touched">
+            </div>
+            <div class="invalid-feedback" *ngIf="location?.invalid && location?.touched">
+              <span *ngIf="location?.errors?.['required']">Location is required</span>
+              <span *ngIf="location?.errors?.['minlength']">Location must be at least 2 characters</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="keywords" class="form-label">Keywords</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="fas fa-search"></i>
+              </span>
+              <input
+                type="text"
+                id="keywords"
+                class="form-control"
+                formControlName="keywords"
+                placeholder="e.g., software engineer, marketing manager">
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Search Fields -->
+        <div class="advanced-fields">
+          <h4 class="advanced-title">
+            <i class="fas fa-sliders-h me-2"></i>
+            Advanced Filters
+          </h4>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="experience" class="form-label">Experience Level</label>
+              <select id="experience" class="form-select" formControlName="experience">
+                <option value="">Any Experience</option>
+                <option value="entry">Entry Level (0-2 years)</option>
+                <option value="mid">Mid Level (3-5 years)</option>
+                <option value="senior">Senior Level (6-10 years)</option>
+                <option value="executive">Executive Level (10+ years)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="education" class="form-label">Education</label>
+              <select id="education" class="form-select" formControlName="education">
+                <option value="">Any Education</option>
+                <option value="high-school">High School</option>
+                <option value="associate">Associate Degree</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="master">Master's Degree</option>
+                <option value="phd">PhD</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="skills" class="form-label">Skills</label>
+              <input
+                type="text"
+                id="skills"
+                class="form-control"
+                formControlName="skills"
+                placeholder="e.g., JavaScript, Python, React">
+            </div>
+
+            <div class="form-group">
+              <label for="company" class="form-label">Company</label>
+              <input
+                type="text"
+                id="company"
+                class="form-control"
+                formControlName="company"
+                placeholder="e.g., Google, Microsoft, Amazon">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="industry" class="form-label">Industry</label>
+              <select id="industry" class="form-select" formControlName="industry">
+                <option value="">Any Industry</option>
+                <option value="technology">Technology</option>
+                <option value="finance">Finance</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="education">Education</option>
+                <option value="marketing">Marketing</option>
+                <option value="consulting">Consulting</option>
+                <option value="retail">Retail</option>
+                <option value="manufacturing">Manufacturing</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="maxResults" class="form-label">Max Results</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  id="maxResults"
+                  class="form-control"
+                  formControlName="maxResults"
+                  min="1"
+                  [max]="getMaxResults()"
+                  [class.is-invalid]="maxResults?.invalid && maxResults?.touched">
+                <span class="input-group-text">profiles</span>
+              </div>
+              <div class="invalid-feedback" *ngIf="maxResults?.invalid && maxResults?.touched">
+                <span *ngIf="maxResults?.errors?.['min']">Must be at least 1</span>
+                <span *ngIf="maxResults?.errors?.['max']">Cannot exceed {{ getMaxResults() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="source" class="form-label">Source de scraping</label>
+              <select id="source" class="form-select" formControlName="source">
+                <option value="LINKEDIN">LinkedIn</option>
+                <option value="GOOGLE_MAP">Google</option>
+                <option value="PAGE_JAUNE">Pages Jaunes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="searchRadius" class="form-label">Search Radius</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  id="searchRadius"
+                  class="form-control"
+                  formControlName="searchRadius"
+                  min="1"
+                  max="500">
+                <span class="input-group-text">km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="onClearForm()">
+            <i class="fas fa-eraser me-2"></i>
+            Clear Form
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary search-btn"
+            [disabled]="isSearching || !searchForm.valid">
+            <i class="fas fa-search me-2" *ngIf="!isSearching"></i>
+            <i class="fas fa-spinner fa-spin me-2" *ngIf="isSearching"></i>
+            {{ isSearching ? 'Searching...' : 'Start Search' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Search History -->
+    <div class="search-history-section" *ngIf="searchHistory.length > 0">
+      <h3 class="section-title">Recent Searches</h3>
+      <div class="search-history">
+        <div
+          class="history-item"
+          *ngFor="let search of searchHistory"
+          (click)="onLoadPreviousSearch(search)">
+          <div class="history-info">
+            <div class="history-location">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              {{ search.criteria?.location || 'Location Search' }}
+            </div>
+            <div class="history-meta">
+              <span class="history-date">
+                <i class="fas fa-calendar me-1"></i>
+                {{ search.createdAt | date:'short' }}
+              </span>
+              <span class="history-results">
+                <i class="fas fa-users me-1"></i>
+                {{ search.profilesCount || 0 }} profiles
+              </span>
+            </div>
+          </div>
+          <div class="history-actions">
+            <button class="btn btn-sm btn-outline-primary">
+              <i class="fas fa-redo me-1"></i>
+              Use Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+2025-10-23 08:50:43 | INFO     | api:scrape:94 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'développeur', 'secteur': '', 'localisation': 'lomé', 'entreprise': '', 'emploi': '', 'taille_entreprise': '', 'keywords': 'développeur', 'location': 'lomé', 'profession': '', 'max_results': 20}
+2025-10-23 08:50:49 | INFO     | api:scrape:171 - /scrape returning 10 results
+2025-10-23 08:52:39 | INFO     | api:scrape:94 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'sécrétaire', 'secteur': '', 'localisation': 'Lomé', 'entreprise': '', 'emploi': '', 'taille_entreprise': '', 'keywords': 'sécrétaire', 'location': 'Lomé', 'profession': '', 'max_results': 50}
+2025-10-23 08:52:43 | INFO     | api:scrape:171 - /scrape returning 10 results
+2025-10-23 09:31:22 | INFO     | api:scrape:108 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'développeur', 'secteur': '', 'localisation': 'Lomé', 'entreprise': '', 'emploi': '', 'taille_entreprise': '', 'keywords': 'développeur', 'location': 'Lomé', 'profession': '', 'max_results': 50}
+2025-10-23 09:31:51 | INFO     | api:scrape:197 - /scrape returning 47 results

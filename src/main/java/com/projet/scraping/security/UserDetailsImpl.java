@@ -38,7 +38,20 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRoles()));
+        
+        // Parse multiple roles separated by comma
+        String roles = user.getRoles();
+        if (roles != null && !roles.isEmpty()) {
+            String[] roleArray = roles.split(",");
+            for (String role : roleArray) {
+                String trimmedRole = role.trim();
+                // Add ROLE_ prefix if not already present
+                if (!trimmedRole.startsWith("ROLE_")) {
+                    trimmedRole = "ROLE_" + trimmedRole;
+                }
+                authorities.add(new SimpleGrantedAuthority(trimmedRole));
+            }
+        }
 
 /*
         Long ministere = (long) ((user.getCodeMinistere() != 0) ? user.getCodeMinistere() : 0);

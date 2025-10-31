@@ -1,0 +1,208 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2">🤖 Gestion du Scraping</h1>
+    <p class="text-gray-600 dark:text-gray-400">Suivre les recherches et contrôler l'activité de scraping</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+          <i class="fa-solid fa-play text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ activeSearches }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Recherches actives</div>
+      <div class="text-xs text-blue-600 dark:text-blue-400 mt-2">En cours...</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">
+          <i class="fa-solid fa-check text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ totalSearches }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Recherches totales</div>
+      <div class="text-xs text-green-600 dark:text-green-400 mt-2">Mise à jour</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+          <i class="fa-solid fa-users text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ totalProfiles | number }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Profils scrapés</div>
+      <div class="text-xs text-purple-600 dark:text-purple-400 mt-2">Aujourd'hui</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center">
+          <i class="fa-solid fa-triangle-exclamation text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">{{ failedCount }}</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Erreurs</div>
+      <div class="text-xs text-red-600 dark:text-red-400 mt-2">Dernières 24h</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Utilisateur</label>
+        <input [(ngModel)]="searchTerm" (input)="applyFilters()" type="text" placeholder="Email..." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Source</label>
+        <select [(ngModel)]="selectedSource" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="all">Toutes les sources</option>
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="Indeed">Indeed</option>
+          <option value="WELCOME_TO_THE_JUNGLE">Welcome to the Jungle</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Statut</label>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="all">Tous les statuts</option>
+          <option value="running">En cours</option>
+          <option value="completed">Terminé</option>
+          <option value="failed">Échec</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Date</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Toutes les dates</option>
+          <option value="today">Aujourd'hui</option>
+          <option value="7days">7 derniers jours</option>
+          <option value="30days">30 derniers jours</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Searches Table -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Recherches de scraping</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">ID</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateur</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Critères</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Source</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Date</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Profils</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Statut</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <!-- Group header rows -->
+          <ng-container *ngFor="let g of paginatedGroups">
+            <tr class="bg-gray-50/60 dark:bg-gray-900/40">
+              <td class="py-3 px-6" colspan="8">
+                <button (click)="toggleGroup(g.email)" class="w-full flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid" [ngClass]="isExpanded(g.email) ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    <div>
+                      <div class="font-semibold text-gray-900 dark:text-white">{{ g.user }}</div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400">{{ g.email }}</div>
+                    </div>
+                  </div>
+                  <div class="text-sm text-gray-600 dark:text-gray-400">
+                    {{ g.activities.length }} activité(s)
+                  </div>
+                </button>
+              </td>
+            </tr>
+            <!-- Group detail rows -->
+            <tr *ngFor="let a of g.activities" [class.hidden]="!isExpanded(g.email)" class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+              <td class="py-4 px-6">
+                <div class="font-mono text-sm text-gray-900 dark:text-white">{{ a.id }}</div>
+              </td>
+              <td class="py-4 px-6">
+                <div class="font-semibold text-gray-900 dark:text-white">{{ a.user }}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">{{ a.email }}</div>
+              </td>
+              <td class="py-4 px-6">
+                <div class="text-sm text-gray-900 dark:text-white">{{ a.criteria }}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-400">{{ a.location }}</div>
+              </td>
+              <td class="py-4 px-6">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-bold">{{ a.source }}</span>
+              </td>
+              <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+                <div>{{ a.date | date:'dd/MM/yyyy' }}</div>
+                <div class="text-xs">{{ a.date | date:'HH:mm' }}</div>
+              </td>
+              <td class="py-4 px-6">
+                <div class="font-semibold text-gray-900 dark:text-white">{{ a.profilesFound }}</div>
+                <div class="text-xs" [ngClass]="{
+                  'text-gray-500 dark:text-gray-400': a.status === 'running',
+                  'text-green-500 dark:text-green-400': a.status === 'completed',
+                  'text-red-500 dark:text-red-400': a.status === 'failed'
+                }">{{ a.status === 'running' ? 'En cours...' : (a.status === 'completed' ? 'Terminé' : 'Échec') }}</div>
+              </td>
+              <td class="py-4 px-6">
+                <span *ngIf="a.status === 'running'" class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                  <i class="fa-solid fa-spinner fa-spin"></i>
+                  En cours
+                </span>
+                <span *ngIf="a.status === 'completed'" class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                  <i class="fa-solid fa-check"></i>
+                  Terminé
+                </span>
+                <span *ngIf="a.status === 'failed'" class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                  <i class="fa-solid fa-xmark"></i>
+                  Échec
+                </span>
+              </td>
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-2">
+                  <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  <button *ngIf="a.status === 'running'" (click)="stopScraping(a.id)" class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" title="Arrêter">
+                    <i class="fa-solid fa-stop"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="p-6 border-t border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          Affichage de {{ displayedFrom }} à {{ displayedTo }} sur {{ groupedActivities.length }} utilisateurs
+        </div>
+        <div class="flex items-center gap-2">
+          <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+            Précédent
+          </button>
+          <span class="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold">{{ currentPage }}</span>
+          <span class="text-gray-500">/ {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage >= totalPages" class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

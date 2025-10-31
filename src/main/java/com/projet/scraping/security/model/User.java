@@ -1,7 +1,10 @@
 package com.projet.scraping.security.model;
+import com.projet.scraping.entities.enums.AccountType;
+import com.projet.scraping.entities.enums.UserStatus;
 import com.projet.scraping.utils.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,6 +17,10 @@ public class User extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @UuidGenerator
+    @Column(name = "public_id", nullable = false, unique = true, updatable = false)
+    private UUID publicId;
 
     @Column(name = "nom",nullable = false)
     private String nom;
@@ -124,11 +131,11 @@ public class User extends BaseEntity implements Serializable {
         this.enable = enable;
     }
 
-    public enum AccountType {
-        ADMIN, RECRUTEUR, ENTREPRISE, USER
+    public UUID getPublicId() {
+        return publicId;
     }
 
-    public enum UserStatus {
-        ACTIVE, INACTIVE, SUSPENDED, PENDING
+    public void setPublicId(UUID publicId) {
+        this.publicId = publicId;
     }
 }

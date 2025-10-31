@@ -17,4 +17,7 @@ public interface PaiementService {
     // Autres méthodes
     PaiementResponse processPayment(PaiementCrudRequest req, Long typeAbonnementId);
     PaiementResponse updatePaymentStatus(Long paiementId, PaymentStatus status, Long typeAbonnementId);
+
+    // Stripe Payment Intent
+    String createPaymentIntent(Long amount, String currency, Long typeAbonnementId);
 }

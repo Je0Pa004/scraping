@@ -1,0 +1,99 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2 class="login-title">Welcome Back</h2>
+      <p class="login-subtitle">Sign in to your account to continue</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter your email"
+            [class.is-invalid]="email?.invalid && email?.touched"
+            [class.is-valid]="email?.valid && email?.touched">
+        </div>
+        <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email address</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-lock"></i>
+          </span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Enter your password"
+            [class.is-invalid]="password?.invalid && password?.touched"
+            [class.is-valid]="password?.valid && password?.touched">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <!-- Remember Me & Forgot Password -->
+      <div class="form-options">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            id="rememberMe"
+            formControlName="rememberMe"
+            class="form-check-input">
+          <label for="rememberMe" class="form-check-label">Remember me</label>
+        </div>
+        <a routerLink="/auth/forgot-password" class="forgot-password-link">Forgot password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 login-btn"
+        [disabled]="isLoading">
+        <span *ngIf="isLoading" class="loader-custom me-2"></span>
+        <i class="fas fa-sign-in-alt me-2" *ngIf="!isLoading"></i>
+        {{ isLoading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <!-- Register Link -->
+    <div class="login-footer">
+      <p class="mb-0">
+        Don't have an account?
+        <a routerLink="/auth/register" class="register-link">Create one here</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Demo Credentials (Remove in production) -->
+  <div class="demo-credentials" *ngIf="false">
+    <h6>Demo Credentials:</h6>
+    <p><strong>Admin:</strong> admin@example.com / admin123</p>
+    <p><strong>User:</strong> user@example.com / user123</p>
+  </div>
+</div>

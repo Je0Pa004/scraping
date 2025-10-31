@@ -1,0 +1,23 @@
+.auth-bg-teal{background:linear-gradient(135deg,#eff6ff,#ecfeff,#e6fffa)}
+.text-gradient-teal{background:linear-gradient(90deg,#2563eb,#06b6d4,#14b8a6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bg-teal-soft{background:#d1fae5}
+.text-teal{color:#0d9488}
+.fw-black{font-weight:900}
+.shadow-xxl{box-shadow:0 20px 50px rgba(0,0,0,.08)}
+
+.input-with-icon{position:relative}
+.input-with-icon .input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#9ca3af}
+.input-with-icon .toggle-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);color:#9ca3af}
+
+.btn-gradient-teal{background:linear-gradient(90deg,#2563eb,#06b6d4,#14b8a6);color:#fff;border:0}
+.btn-gradient-teal:hover{filter:brightness(.95)}
+
+.stat-box{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.bg-gradient-blue{background:linear-gradient(135deg,#3b82f6,#60a5fa)}
+.bg-gradient-cyan{background:linear-gradient(135deg,#06b6d4,#22d3ee)}
+.bg-gradient-teal{background:linear-gradient(135deg,#14b8a6,#34d399)}
+
+.feature-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+
+.loader-custom{display:inline-block;width:1rem;height:1rem;border:2px solid #f3f3f3;border-top:2px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}

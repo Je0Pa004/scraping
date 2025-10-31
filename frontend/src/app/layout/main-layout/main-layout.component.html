@@ -1,0 +1,47 @@
+<div class="main-layout">
+  <!-- Top Navbar -->
+  <app-navbar *ngIf="shouldShowNavbar()"></app-navbar>
+
+  <div class="layout-content">
+    <!-- Sidebar -->
+    <app-sidebar
+      *ngIf="shouldShowSidebar()"
+      [class.collapsed]="sidebarCollapsed">
+    </app-sidebar>
+
+    <!-- Main Content Area -->
+    <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
+      <!-- Breadcrumb (optional) -->
+      <nav aria-label="breadcrumb" class="breadcrumb-nav" *ngIf="shouldShowSidebar()">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" (click)="toggleSidebar()" class="sidebar-toggle">
+              <i class="fas fa-bars"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ getCurrentPageTitle() }}
+          </li>
+        </ol>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Notifications -->
+  <div class="notification-container">
+    <app-alert
+      *ngFor="let notification of notifications$ | async"
+      [type]="notification.type"
+      [title]="notification.title"
+      [message]="notification.message"
+      [autoClose]="true"
+      [autoCloseDelay]="5000"
+      (close)="removeNotification(notification.id)">
+    </app-alert>
+  </div>
+</div>

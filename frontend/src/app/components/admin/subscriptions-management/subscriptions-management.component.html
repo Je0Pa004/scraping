@@ -1,0 +1,215 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2">💳 Gestion des Abonnements</h1>
+      <p class="text-gray-600 dark:text-gray-400">Gérer les types d'abonnements et leurs caractéristiques</p>
+    </div>
+    <button (click)="openCreateModal()" class="px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-200">
+      <i class="fa-solid fa-plus mr-2"></i>
+      Nouvel Abonnement
+    </button>
+  </div>
+
+  
+
+  <!-- Plans Table -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Plans d'abonnement</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Plan</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Prix</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Quota Recherches</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateurs</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Revenu/mois</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Statut</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <!-- Free Plan -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+                  <i class="fa-solid fa-gift text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-white">Free</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Plan gratuit</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-bold text-gray-900 dark:text-white">0 CFA</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">5</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">recherches/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">847</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">0 CFA</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">Actif</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Modifier">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="p-2 text-gray-400 cursor-not-allowed rounded-lg" title="Impossible de supprimer le plan Free" disabled>
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Basic Plan -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                  <i class="fa-solid fa-star text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-white">Basic</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Plan standard</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-bold text-gray-900 dark:text-white">49 CFA</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">25</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">recherches/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">312</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">15,288 CFA</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">Actif</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Modifier">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" title="Supprimer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Premium Plan -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center">
+                  <i class="fa-solid fa-crown text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold text-gray-900 dark:text-white">Premium</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Plan avancé</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-bold text-gray-900 dark:text-white">99 CFA</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">100</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">recherches/mois</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">88</div>
+            </td>
+            <td class="py-4 px-6">
+              <div class="font-semibold text-gray-900 dark:text-white">8,712 CFA</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">Actif</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="flex items-center gap-2">
+                <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Modifier">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-200" title="Supprimer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Features Comparison -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Comparaison des fonctionnalités</h2>
+    
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-700">
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Fonctionnalité</th>
+            <th class="text-center py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Free</th>
+            <th class="text-center py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Basic</th>
+            <th class="text-center py-3 px-4 text-sm font-semibold text-gray-700 dark:text-gray-300">Premium</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <tr>
+            <td class="py-3 px-4 text-sm text-gray-900 dark:text-white">Recherches/mois</td>
+            <td class="py-3 px-4 text-center text-sm text-gray-600 dark:text-gray-400">5</td>
+            <td class="py-3 px-4 text-center text-sm text-gray-600 dark:text-gray-400">25</td>
+            <td class="py-3 px-4 text-center text-sm text-gray-600 dark:text-gray-400">100</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-sm text-gray-900 dark:text-white">Export CSV</td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-sm text-gray-900 dark:text-white">Envoi emails automatique</td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-sm text-gray-900 dark:text-white">Support prioritaire</td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 text-sm text-gray-900 dark:text-white">API Access</td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-xmark text-red-500"></i></td>
+            <td class="py-3 px-4 text-center"><i class="fa-solid fa-check text-green-500"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

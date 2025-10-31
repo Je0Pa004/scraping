@@ -15,6 +15,8 @@ import com.projet.scraping.services.AbonnementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,15 +40,15 @@ public class AbonnementServiceImpl implements AbonnementService {
         TypeAbonnement type = typeAbonnementRepository.findByPublicId(UUID.fromString(String.valueOf(req.getTypeAbonnementPublicId())))
                 .orElseThrow(() -> new IllegalArgumentException("TypeAbonnement introuvable: " + req.getTypeAbonnementPublicId()));
 
-        com.projet.scraping.security.model.User user = userRepository.findByPublicId(UUID.fromString(String.valueOf(req.getUtilisateurPublicId())))
-                .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable: " + req.getUtilisateurPublicId()));
+        com.projet.scraping.security.model.User user = userRepository.findByPublicId(getCurrentUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable: " + getCurrentUserId()));
 
         Abonnement e = Abonnement.builder()
                 .dateDebut(LocalDate.now())
                 .dateFin(calculateEndDate(LocalDate.now(), type.getType()))
                 .prix(BigDecimal.valueOf(type.getCout()))
-                .statut(true)
-                .nombreScraping(0)
+                .statut(false)
+                .quotaUtilise(0)
                 .utilisateur(user)
                 .typeAbonnement(type)
                 .build();
@@ -58,19 +60,19 @@ public class AbonnementServiceImpl implements AbonnementService {
     @Override
     @Transactional(readOnly = true)
     public AbonnementResponse get(Long id) {
-        Abonnement e = abonnementRepository.findById(id).orElse(null);
+        Abonnement e = abonnementRepository.findByIdAndUtilisateur_PublicId(id, getCurrentUserId()).orElse(null);
         return e != null ? abonnementMapper.toResponse(e) : null;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<AbonnementResponse> getAll() {
-        return abonnementRepository.findAll().stream().map(abonnementMapper::toResponse).toList();
+        return abonnementRepository.findByUtilisateur_PublicId(getCurrentUserId()).stream().map(abonnementMapper::toResponse).toList();
     }
 
     @Override
     public AbonnementResponse update(Long id, AbonnementRequest req) {
-        Abonnement e = abonnementRepository.findById(id)
+        Abonnement e = abonnementRepository.findByIdAndUtilisateur_PublicId(id, getCurrentUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Abonnement introuvable: " + id));
         abonnementMapper.update(e, req);
         e = abonnementRepository.save(e);
@@ -79,7 +81,8 @@ public class AbonnementServiceImpl implements AbonnementService {
 
     @Override
     public void delete(Long id) {
-        abonnementRepository.deleteById(id);
+        abonnementRepository.findByIdAndUtilisateur_PublicId(id, getCurrentUserId())
+                .ifPresent(a -> abonnementRepository.deleteById(a.getId()));
     }
 
     // ===== Autres méthodes =====
@@ -144,7 +147,7 @@ public class AbonnementServiceImpl implements AbonnementService {
         newAbonnement.setDateFin(calculateEndDate(LocalDate.now(), type.getType()));
         newAbonnement.setPrix(BigDecimal.valueOf(type.getCout()));
         newAbonnement.setStatut(true);
-        newAbonnement.setNombreScraping(0);
+        newAbonnement.setQuotaUtilise(0);
         com.projet.scraping.security.model.User user = new com.projet.scraping.security.model.User();
         user.setId(userId);
         newAbonnement.setUtilisateur(user);
@@ -176,5 +179,19 @@ public class AbonnementServiceImpl implements AbonnementService {
         int max = a.getTypeAbonnement().getNombreScrapingMax();
         long used = scrapingRepository.sumNombreProfilScrapeByUtilisateurId(userId);
         return Math.max(0, max - (int) used);
+    }
+
+    private UUID getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getPrincipal() == null) {
+            throw new IllegalStateException("Utilisateur non authentifié");
+        }
+        Object principal = auth.getPrincipal();
+        if (principal instanceof com.projet.scraping.security.UserDetailsImpl u) {
+            return u.getId();
+        }
+        String email = auth.getName();
+        return userRepository.findByEmail(email).map(com.projet.scraping.security.model.User::getPublicId)
+                .orElseThrow(() -> new IllegalStateException("Utilisateur introuvable"));
     }
 }

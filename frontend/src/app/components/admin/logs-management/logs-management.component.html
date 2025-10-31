@@ -1,0 +1,306 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2"> Logs & Supervision</h1>
+      <p class="text-gray-600 dark:text-gray-400">Visibilité technique sur la plateforme</p>
+    </div>
+    <div class="flex gap-3">
+      <button class="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">
+        <i class="fa-solid fa-broom mr-2"></i>
+        Nettoyer anciens logs
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center">
+          <i class="fa-solid fa-circle-exclamation text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">23</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Erreurs critiques</div>
+      <div class="text-xs text-red-600 dark:text-red-400 mt-2">Dernières 24h</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-600 to-yellow-600 flex items-center justify-center">
+          <i class="fa-solid fa-triangle-exclamation text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">156</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Avertissements</div>
+      <div class="text-xs text-orange-600 dark:text-orange-400 mt-2">Dernières 24h</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center">
+          <i class="fa-solid fa-info-circle text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">2.4K</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Informations</div>
+      <div class="text-xs text-blue-600 dark:text-blue-400 mt-2">Dernières 24h</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center">
+          <i class="fa-solid fa-gauge text-white text-xl"></i>
+        </div>
+      </div>
+      <div class="text-3xl font-black text-gray-900 dark:text-white mb-1">98.5%</div>
+      <div class="text-sm text-gray-600 dark:text-gray-400">Uptime</div>
+      <div class="text-xs text-green-600 dark:text-green-400 mt-2">Ce mois</div>
+    </div>
+  </div>
+
+  <!-- Performance Metrics -->
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">⚡ Performance</h3>
+      <div class="space-y-4">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Temps moyen recherche</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">2.3s</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div class="bg-gradient-to-r from-green-600 to-emerald-600 h-2 rounded-full" style="width: 85%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Temps réponse API</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">145ms</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div class="bg-gradient-to-r from-blue-600 to-cyan-600 h-2 rounded-full" style="width: 92%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Taux de succès scraping</span>
+            <span class="text-sm font-bold text-gray-900 dark:text-white">94.2%</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2 rounded-full" style="width: 94%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">📊 Erreurs par jour (7 derniers jours)</h3>
+      <div class="h-48 flex items-center justify-center bg-gray-50 dark:bg-gray-900/50 rounded-xl">
+        <p class="text-gray-500 dark:text-gray-400">Graphique Chart.js ici</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Type</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Tous les types</option>
+          <option value="error">Erreur</option>
+          <option value="warning">Avertissement</option>
+          <option value="info">Information</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Gravité</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Toutes</option>
+          <option value="critical">Critique</option>
+          <option value="high">Élevée</option>
+          <option value="medium">Moyenne</option>
+          <option value="low">Faible</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Source</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Toutes les sources</option>
+          <option value="scraping">Scraping</option>
+          <option value="api">API</option>
+          <option value="payment">Paiement</option>
+          <option value="email">Email</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Date</label>
+        <select class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+          <option value="">Toutes les dates</option>
+          <option value="today">Aujourd'hui</option>
+          <option value="7days">7 derniers jours</option>
+          <option value="30days">30 derniers jours</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Rechercher</label>
+        <input type="text" placeholder="Message, ID..." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+      </div>
+    </div>
+  </div>
+
+  <!-- Logs Table -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-soft border border-gray-100 dark:border-gray-700">
+    <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white">Logs système</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-gray-900/50">
+          <tr>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Timestamp</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Type</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Source</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Message</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Utilisateur</th>
+            <th class="text-left py-4 px-6 text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+          <!-- Log 1 - Error -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+              <div>17/01/2025</div>
+              <div class="text-xs">14:32:15</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                Erreur
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-xs font-bold">Scraping</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-sm text-gray-900 dark:text-white font-medium">LinkedIn timeout après 30s</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-1">Error: Request timeout at scraper.py:142</div>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">tech&#64;company.com</td>
+            <td class="py-4 px-6">
+              <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Log 2 - Warning -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+              <div>17/01/2025</div>
+              <div class="text-xs">14:28:42</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Warning
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold">Paiement</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-sm text-gray-900 dark:text-white font-medium">Tentative de paiement échouée</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-1">Stripe: Card declined - insufficient funds</div>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">contact&#64;digital.com</td>
+            <td class="py-4 px-6">
+              <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Log 3 - Info -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+              <div>17/01/2025</div>
+              <div class="text-xs">14:25:18</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                <i class="fa-solid fa-info-circle"></i>
+                Info
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 rounded-full text-xs font-bold">Email</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-sm text-gray-900 dark:text-white font-medium">Email de bienvenue envoyé avec succès</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-1">SendGrid: Message delivered (ID: msg_123456)</div>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">newuser&#64;startup.com</td>
+            <td class="py-4 px-6">
+              <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Log 4 - Error -->
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/30 transition-colors duration-200">
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">
+              <div>17/01/2025</div>
+              <div class="text-xs">14:20:05</div>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-xs font-bold flex items-center gap-1 w-fit">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                Erreur
+              </span>
+            </td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-700 dark:text-gray-400 rounded-full text-xs font-bold">API</span>
+            </td>
+            <td class="py-4 px-6">
+              <div class="text-sm text-gray-900 dark:text-white font-medium">Erreur 500 - Internal Server Error</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 font-mono mt-1">NullPointerException at UserController.java:87</div>
+            </td>
+            <td class="py-4 px-6 text-sm text-gray-600 dark:text-gray-400">-</td>
+            <td class="py-4 px-6">
+              <button class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200" title="Voir détails">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="p-6 border-t border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          Affichage de 1 à 20 sur 2,547 logs
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+            Précédent
+          </button>
+          <button class="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold">1</button>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">2</button>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">3</button>
+          <span class="px-2 text-gray-500">...</span>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">128</button>
+          <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

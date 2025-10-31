@@ -1,0 +1,25 @@
+<div class="modal-backdrop" *ngIf="show" (click)="onBackdropClick($event)">
+  <div class="modal" [class.show]="show" [ngClass]="modalSizeClass">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" *ngIf="title">
+          <h5 class="modal-title">{{ title }}</h5>
+          <button type="button" class="btn-close" (click)="onClose()" *ngIf="closable"></button>
+        </div>
+
+        <div class="modal-body">
+          <ng-content></ng-content>
+        </div>
+
+        <div class="modal-footer" *ngIf="showFooter">
+          <button type="button" class="btn btn-secondary" (click)="onClose()" *ngIf="closable">
+            <i class="fas fa-times me-1"></i>Close
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onConfirm()">
+            <i class="fas fa-check me-1"></i>Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 package com.projet.scraping.controller;
 
 import com.projet.scraping.DtoRequest.PaiementCrudRequest;
+import com.projet.scraping.DtoRequest.PaymentStatusUpdateRequest;
 import com.projet.scraping.DtoResponse.PaiementResponse;
 import com.projet.scraping.services.PaiementService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/paiements")
@@ -40,5 +42,20 @@ public class PaiementController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         paiementService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<PaiementResponse> updateStatus(@PathVariable Long id, @RequestBody PaymentStatusUpdateRequest request) {
+        return ResponseEntity.ok(paiementService.updatePaymentStatus(id, request.getStatus(), request.getTypeAbonnementId()));
+    }
+
+    @PostMapping("/create-payment-intent")
+    public ResponseEntity<Map<String, String>> createPaymentIntent(@RequestBody Map<String, Object> request) {
+        Long amount = Long.valueOf(request.get("amount").toString());
+        String currency = (String) request.get("currency");
+        Long typeAbonnementId = Long.valueOf(request.get("typeAbonnementId").toString());
+
+        String clientSecret = paiementService.createPaymentIntent(amount, currency, typeAbonnementId);
+        return ResponseEntity.ok(Map.of("clientSecret", clientSecret));
     }
 }

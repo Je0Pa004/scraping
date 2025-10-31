@@ -1,0 +1,154 @@
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.sidebar-nav {
+  padding: 1rem 0;
+  flex: 1;
+}
+
+.nav-item {
+  margin-bottom: 0.25rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 0 25px 25px 0;
+  margin-right: 0.5rem;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white !important;
+  border-left: 4px solid white;
+}
+
+.nav-icon {
+  width: 1.25rem;
+  text-align: center;
+  margin-right: 0.75rem;
+  font-size: 1rem;
+}
+
+.nav-text {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.125rem;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-link {
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .nav-icon {
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar-footer {
+    padding: 0.75rem;
+  }
+
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}

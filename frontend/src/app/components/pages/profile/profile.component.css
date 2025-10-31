@@ -1,0 +1,101 @@
+/* Profile page styles */
+.nav.nav-pills .nav-link {
+  border-radius: 12px;
+}
+
+.card {
+  border-radius: 16px;
+}
+
+/* Subscription section styles */
+.subscription-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+}
+
+.subscription-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.plan-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.plan-description {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 4px 0 0 0;
+}
+
+.usage-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.usage-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745, #20c997);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.usage-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.status-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #d1e7dd;
+  color: #0f5132;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #198754;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .subscription-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .plan-details {
+    width: 100%;
+  }
+}
