@@ -1,0 +1,22 @@
+<div class="max-w-xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Déposer votre CV</h1>
+
+  <div *ngIf="!token" class="p-4 rounded bg-red-50 text-red-700 mb-4">
+    Lien invalide ou expiré. Vérifiez l'URL reçue par email.
+  </div>
+
+  <div class="space-y-4" *ngIf="token">
+    <div>
+      <label class="block text-sm font-medium mb-2">Fichier PDF</label>
+      <input type="file" accept="application/pdf" (change)="onFileChange($event)" class="block w-full" />
+    </div>
+
+    <button (click)="submit()"
+            [disabled]="uploading || !file"
+            class="px-4 py-2 rounded text-white"
+            [class.bg-gray-400]="uploading || !file"
+            [class.bg-blue-600]="!uploading && !!file">
+      {{ uploading ? 'Envoi...' : 'Envoyer mon CV' }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+2025-11-01 16:13:03 | INFO     | api:scrape:108 - /scrape called with: {'source': 'linkedin', 'sources': None, 'titre': 'développeur', 'secteur': '', 'localisation': 'lomé', 'entreprise': 'odda technology', 'emploi': '', 'taille_entreprise': '', 'keywords': 'développeur', 'location': 'lomé', 'profession': '', 'max_results': 50}
+2025-11-01 16:13:24 | INFO     | api:scrape:197 - /scrape returning 48 results

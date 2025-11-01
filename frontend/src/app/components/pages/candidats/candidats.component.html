@@ -1,0 +1,58 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="mb-6">
+    <h1 class="text-3xl font-black text-gray-900 mb-1">👤 Candidats</h1>
+    <p class="text-gray-600">Invitations, réception de CV et gestion</p>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-soft p-6 mb-6">
+    <h2 class="text-lg font-bold text-gray-900 mb-4">Inviter un candidat</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <input [(ngModel)]="email" type="email" placeholder="Email" class="px-4 py-2 border rounded-lg">
+      <input [(ngModel)]="nom" type="text" placeholder="Nom (optionnel)" class="px-4 py-2 border rounded-lg">
+      <input [(ngModel)]="telephone" type="text" placeholder="Téléphone (optionnel)" class="px-4 py-2 border rounded-lg">
+      <input [(ngModel)]="profilPublicId" type="text" placeholder="Profil publicId (optionnel)" class="px-4 py-2 border rounded-lg">
+    </div>
+    <textarea [(ngModel)]="notes" rows="3" placeholder="Notes (optionnel)" class="w-full mt-3 px-4 py-2 border rounded-lg"></textarea>
+    <div class="mt-4">
+      <button (click)="inviter()" class="px-6 py-2 bg-primary-600 text-white font-semibold rounded-lg">Envoyer l'invitation</button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-soft p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-bold text-gray-900">Liste des candidats</h2>
+      <span *ngIf="loading" class="text-sm text-gray-500">Chargement...</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Email</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Nom</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Statut</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">CV</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Invité</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">Reçu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of candidats" class="border-b border-gray-100">
+            <td class="py-3 px-4 text-sm">{{ c.email }}</td>
+            <td class="py-3 px-4 text-sm">{{ c.nom || '—' }}</td>
+            <td class="py-3 px-4 text-sm">{{ c.statut }}</td>
+            <td class="py-3 px-4 text-sm">
+              <a *ngIf="c.cvUrl" [href]="c.cvUrl" target="_blank" class="text-primary-600">Télécharger</a>
+              <span *ngIf="!c.cvUrl">—</span>
+            </td>
+            <td class="py-3 px-4 text-sm">{{ c.dateInvitation ? (c.dateInvitation | date:'short') : '—' }}</td>
+            <td class="py-3 px-4 text-sm">{{ c.dateReception ? (c.dateReception | date:'short') : '—' }}</td>
+          </tr>
+          <tr *ngIf="!loading && candidats.length === 0">
+            <td colspan="6" class="py-6 text-center text-gray-500">Aucun candidat</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
